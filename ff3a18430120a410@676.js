@@ -23,6 +23,8 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   container.style.overflowY = "hidden";
   container.style.maxWidth = "100%";
   container.style.display = "block";
+  container.style.border = "2px dashed red";
+
   
 
 
