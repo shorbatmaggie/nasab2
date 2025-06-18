@@ -2245,8 +2245,16 @@ function _constructTangleLayout(d3){return(
   });
 
   var layout = {
-    width: d3.max(nodes, n => n.x) + node_width + 2 * padding,
-    height: d3.max(nodes, n => n.y) + node_height / 2 + 2 * padding,
+    width: Math.max(
+      d3.max(nodes, n => n.x + node_width),
+      d3.max(bundles, b => b.x + bundle_width)
+    ) + 2 * padding,
+
+    height: Math.max(
+      d3.max(nodes, n => n.y + node_height / 2),
+      d3.max(bundles, b => b.y ?? 0)
+    ) + 2 * padding,
+
     node_height,
     node_width,
     bundle_width,
