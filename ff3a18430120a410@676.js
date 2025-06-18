@@ -48,6 +48,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
       .map(
         l => `
       M${l.xt - labelClearance} ${l.yt}
+      L${l.xt + labelClearance} ${l.yt}  // ← move the bend AFTER the label
       L${l.xb - l.c1} ${l.yt}
       A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
       L${l.xb} ${l.ys - l.c2}
