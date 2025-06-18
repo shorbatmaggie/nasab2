@@ -1,13 +1,10 @@
 function _1(md) {
-  return (
-    md`# Nasab2`
-  )
+  return md`# Nasab2`;
 }
 
 function extractAncestry(targetId, fullData) {
   const flat = fullData.flat();
   const lookup = Object.fromEntries(flat.map(n => [n.id, n]));
-
   const visited = new Set();
   const queue = [targetId];
 
@@ -112,7 +109,7 @@ function _dropdown(fullData) {
     for (const node of sorted) {
       const option = document.createElement("option");
       option.value = node.id;
-      option.textContent = node.id;
+      option.textContent = `${node.label} (${node.author}, d. ${node.death} AH)`;
       select.appendChild(option);
     }
 
@@ -127,21 +124,26 @@ function _dropdown(fullData) {
   };
 
   // Ancestry dropdown
-  const ancestryDropdown = createDropdown("Show ancestry of:", extractAncestry);
+  const ancestryDropdown = createDropdown("View Ancestry:", extractAncestry);
 
   // Descendant dropdown
-  const descendantDropdown = createDropdown("Show descendants of:", extractDescendants);
+  const descendantDropdown = createDropdown("View Descendants:", extractDescendants);
 
   // Reset button
   const reset = document.createElement("button");
-  reset.textContent = "Reset to full tree";
+  reset.textContent = "Reset to Full Tree";
   reset.className = "px-4 py-1 rounded text-white";
   reset.style.backgroundColor = "#588B8B";
   reset.onclick = () => window.setFilteredData(fullData);
 
+  // Append all to wrapper
   wrapper.appendChild(ancestryDropdown);
   wrapper.appendChild(descendantDropdown);
   wrapper.appendChild(reset);
+
+  // Mount the dropdown above the SVG
+  const chartContainer = document.querySelector("#chart-area");
+  chartContainer?.parentNode?.insertBefore(wrapper, chartContainer);
 
   return wrapper;
 }
