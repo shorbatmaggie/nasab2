@@ -22,7 +22,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   <style>
     text {
       font-family: sans-serif;
-      font-size: 10px;
+      font-size: 15px;
     }
     .node {
       stroke-linecap: round;
