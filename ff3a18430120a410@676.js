@@ -21,7 +21,9 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   const container = document.createElement("div");
   container.style.overflowX = "auto";
   container.style.overflowY = "hidden";
-  container.style.width = "100vw"; // constrain width to viewport so overflow triggers
+  container.style.maxWidth = "100%";
+  container.style.display = "block";
+  
 
 
   container.innerHTML = `
@@ -2178,7 +2180,7 @@ function _constructTangleLayout(d3){return(
   const level_y_padding = 16;
   const metro_d = 4;
   const min_family_height = 22;
-  const generationSpacing = 10;
+  const generationSpacing = 250;
   const bundleClearance = 200;
   
   options.c ||= 16;
