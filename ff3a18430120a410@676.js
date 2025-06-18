@@ -21,6 +21,8 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   const container = document.createElement("div");
   container.style.overflowX = "auto";
   container.style.overflowY = "hidden";
+  container.style.width = "100vw"; // constrain width to viewport so overflow triggers
+
 
   container.innerHTML = `
   <svg width="${tangleLayout.layout.width}" height="${tangleLayout.layout.height}" style="background-color: ${background_color}">
