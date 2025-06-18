@@ -2182,6 +2182,7 @@ function _constructTangleLayout(d3){return(
   const min_family_height = 22;
   const generationSpacing = 250;
   const bundleClearance = 200;
+  const labelPadding = 200; // enough for long Arabic/English titles
   
   options.c ||= 16;
   const c = options.c;
@@ -2254,7 +2255,7 @@ function _constructTangleLayout(d3){return(
 
   var layout = {
     width: Math.max(
-      d3.max(nodes, n => n.x + node_width),
+      d3.max(nodes, n => n.x + node_width + labelPadding),
       d3.max(bundles, b => b.x + bundle_width)
     ) + 2 * padding,
 
