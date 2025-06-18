@@ -2298,5 +2298,6 @@ export default function define(runtime, observer) {
   main.variable(observer()).define(["md"], _9);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("_")).define("_", ["require"], __);
+  main.variable(observer("html")).define("html", ["@observablehq/htl"], htl => htl.html);
   return main;
 }
