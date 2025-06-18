@@ -44,17 +44,15 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
     </style>
 
   ${tangleLayout.bundles.map((b, i) => {
-    let d = b.links
-      .map(
-        l => `
-      M${l.xt - labelClearance} ${l.yt}
-      L${l.xb - l.c1} ${l.yt}
-      A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
-      L${l.xb} ${l.ys - l.c2}
-      A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
+    let d = b.links.map(l => `
+      M${l.xt + edgeOffset} ${l.yt}
+      L${l.xb - l.c1 + edgeOffset} ${l.yt}
+      A${l.c1} ${l.c1} 90 0 1 ${l.xb + edgeOffset} ${l.yt + l.c1}
+      L${l.xb + edgeOffset} ${l.ys - l.c2}
+      A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2 + edgeOffset} ${l.ys}
       L${l.xs} ${l.ys}`
-      )
-      .join("");
+    ).join("");
+    
     return `
       <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
       <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
@@ -2186,6 +2184,7 @@ function _constructTangleLayout(d3){return(
   const bundleClearance = 200;
   const labelPadding = 500; // enough for long Arabic/English titles
   const baseGenerationSpacing = 250;
+  const edgeOffset = 40; // how far to push the whole edge start rightward
   
   options.c ||= 16;
   const c = options.c;
