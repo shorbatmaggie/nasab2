@@ -48,7 +48,6 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
       .map(
         l => `
       M${l.xt - labelClearance} ${l.yt}
-      L${l.xt + labelClearance} ${l.yt}  // ← move the bend AFTER the label
       L${l.xb - l.c1} ${l.yt}
       A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
       L${l.xb} ${l.ys - l.c2}
@@ -2186,6 +2185,7 @@ function _constructTangleLayout(d3){return(
   const generationSpacing = 250;
   const bundleClearance = 200;
   const labelPadding = 500; // enough for long Arabic/English titles
+  const baseGenerationSpacing = 250;
   
   options.c ||= 16;
   const c = options.c;
@@ -2198,7 +2198,7 @@ function _constructTangleLayout(d3){return(
   var x_offset = padding;
   var y_offset = padding;
   levels.forEach(l => {
-    x_offset += l.bundles.length * bundle_width;
+    x_offset += l.bundles.length * bundle_width + baseGenerationSpacing;
     y_offset += level_y_padding;
     l.forEach((n, i) => {
       n.x = n.level * generationSpacing + x_offset;
