@@ -32,11 +32,13 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
     }
   </style>
 
+const labelClearance = 30;
+
   ${tangleLayout.bundles.map((b, i) => {
     let d = b.links
       .map(
         l => `
-      M${l.xt} ${l.yt}
+      M${l.xt - labelClearance} ${l.yt}
       L${l.xb - l.c1} ${l.yt}
       A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
       L${l.xb} ${l.ys - l.c2}
@@ -60,10 +62,10 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
     <path class="node" stroke="white" stroke-width="4" d="M${n.x} ${n.y -
       n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
 
-    <text class="selectable" data-id="${n.id}" x="${n.x + 40}" y="${n.y -
+    <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y -
       n.height / 2 -
       4}" stroke="${background_color}" stroke-width="2">${n.id}</text>
-    <text x="${n.x + 40}" y="${n.y -
+    <text x="${n.x + 4}" y="${n.y -
       n.height / 2 -
       4}" style="pointer-events: none;">${n.id}</text>
   `
