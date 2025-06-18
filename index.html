@@ -2,13 +2,16 @@
 <meta charset="utf-8">
 <title>Nasab</title>
 <link rel="stylesheet" type="text/css" href="./inspector.css">
+
 <body>
-<script type="module">
+    <script type="module">
 
-import define from "./index.js";
-import {Runtime, Library, Inspector} from "./runtime.js";
+        import define from "./index.js";
+        import { Runtime, Library, Inspector } from "./runtime.js";
+        import { html } from "https://cdn.jsdelivr.net/npm/@observablehq/htl@0.3/dist/htl.min.js";
 
-const runtime = new Runtime();
-const main = runtime.module(define, Inspector.into(document.body));
+        const runtime = new Runtime();
+        const main = runtime.module(define, Inspector.into(document.body));
+        main.variable().define("html", [], () => html);
 
-</script>
+    </script>
