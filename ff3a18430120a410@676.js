@@ -42,25 +42,108 @@ function extractAncestry(targetId, fullData) {
   return grouped;
 }
 
-function _dropdown(fullData) {
-  const select = document.createElement("select");
-  const flatNodes = fullData.flat();
-  const candidates = flatNodes.filter(d => d.parents?.length);
+function extractDescendants(targetId, fullData) {
+  const flat = fullData.flat();
+  const lookup = Object.fromEntries(flat.map(n => [n.id, n]));
+  const childrenMap = new Map();
 
-  for (const node of candidates) {
-    const option = document.createElement("option");
-    option.value = node.id;
-    option.textContent = node.id;
-    select.appendChild(option);
+  for (const node of flat) {
+    for (const parent of node.parents || []) {
+      if (!childrenMap.has(parent)) childrenMap.set(parent, []);
+      childrenMap.get(parent).push(node.id);
+    }
   }
 
-  select.onchange = () => {
-    const selectedID = select.value;
-    const subgraph = extractAncestry(selectedID, fullData);
-    window.setFilteredData(subgraph);
+  const visited = new Set();
+  const queue = [targetId];
+
+  while (queue.length > 0) {
+    const current = queue.pop();
+    if (!visited.has(current)) {
+      visited.add(current);
+      const children = childrenMap.get(current) || [];
+      for (const child of children) {
+        queue.push(child);
+      }
+    }
+  }
+
+  const descendants = flat.filter(n => visited.has(n.id));
+  const genMap = new Map();
+
+  const assignLevel = (node, level = 0) => {
+    if (genMap.has(node.id)) return;
+    genMap.set(node.id, level);
+    for (const child of childrenMap.get(node.id) || []) {
+      assignLevel(lookup[child], level + 1);
+    }
   };
 
-  return select;
+  assignLevel(lookup[targetId], 0);
+
+  const grouped = [];
+  for (const [id, level] of genMap.entries()) {
+    const node = lookup[id];
+    const gen = grouped[level] || (grouped[level] = []);
+    gen.push(node);
+  }
+
+  return grouped;
+}
+
+function _dropdown(fullData) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "space-y-2 p-4 rounded shadow";
+  wrapper.style.backgroundColor = "#FFFFFF";
+  wrapper.style.color = "#588B8B";
+
+  const flat = fullData.flat();
+  const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
+
+  const createDropdown = (labelText, onChangeFn) => {
+    const label = document.createElement("label");
+    label.textContent = labelText;
+    label.style.display = "block";
+
+    const select = document.createElement("select");
+    select.className = "p-2 border rounded w-full";
+    select.style.backgroundColor = "#F5F5F5";
+
+    for (const node of sorted) {
+      const option = document.createElement("option");
+      option.value = node.id;
+      option.textContent = node.id;
+      select.appendChild(option);
+    }
+
+    select.onchange = () => {
+      const selectedID = select.value;
+      const subgraph = onChangeFn(selectedID, fullData);
+      window.setFilteredData(subgraph);
+    };
+
+    label.appendChild(select);
+    return label;
+  };
+
+  // Ancestry dropdown
+  const ancestryDropdown = createDropdown("Show ancestry of:", extractAncestry);
+
+  // Descendant dropdown
+  const descendantDropdown = createDropdown("Show descendants of:", extractDescendants);
+
+  // Reset button
+  const reset = document.createElement("button");
+  reset.textContent = "Reset to full tree";
+  reset.className = "px-4 py-1 rounded text-white";
+  reset.style.backgroundColor = "#588B8B";
+  reset.onclick = () => window.setFilteredData(fullData);
+
+  wrapper.appendChild(ancestryDropdown);
+  wrapper.appendChild(descendantDropdown);
+  wrapper.appendChild(reset);
+
+  return wrapper;
 }
 
 function _2(renderChart, data) {
