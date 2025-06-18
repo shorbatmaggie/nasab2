@@ -10,31 +10,79 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Naskh+Arabic&display=swap"
     rel="stylesheet">
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Styles -->
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="inspector.css" />
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background-color: #F5F5F5;
+    }
+
+    .arabic {
+      font-family: 'Noto Naskh Arabic', serif;
+    }
+
+    body.dyslexic-mode {
+      font-family: 'OpenDyslexic', sans-serif;
+    }
+
+    header {
+      background-color: #588B8B;
+      color: white;
+    }
+
+    button {
+      background-color: #588B8B !important;
+      color: white !important;
+    }
+
+    section {
+      background-color: #FFFFFF !important;
+      color: #588B8B;
+    }
+
+    input,
+    select {
+      background-color: #F5F5F5 !important;
+    }
+
+    nav a,
+    nav label {
+      color: #F0A7AD !important;
+    }
+  </style>
 </head>
 
-<body class="bg-[#F5F5F5] text-black font-sans p-4">
-  <header class="text-center mb-4">
-    <h1 class="text-3xl font-bold mb-2">Nasab</h1>
-    <nav class="space-x-4">
-      <a href="../kan-zaman/index.html">Kan Zaman</a>
-      <a href="nasab2.html">Full Tree</a>
-      <a href="lineages.html">Key Lineages</a>
-    </nav>
+<body class="p-6 font-sans">
+
+  <!-- Header -->
+  <header class="p-6 rounded shadow">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold tracking-wide">Nasab</h1>
+      <p class="mt-1 text-lg not-italic">A Genealogy Visualization Tool</p>
+    </div>
   </header>
 
-  <div class="flex justify-end mb-4">
-    <button id="dyslexia-toggle"
-      class="bg-[#861848] text-white px-4 py-1 rounded-xl shadow-md hover:bg-[#C07293]">Toggle Dyslexia Font</button>
-  </div>
+  <!-- Navigation -->
+  <nav class="max-w-4xl mx-auto mt-4 mb-8 flex gap-4 text-lg font-semibold">
+    <a href="../kan-zaman/index.html" class="underline">Kan Zaman</a>
+    <a href="nasab2.html" class="underline">Full Tree</a>
+    <a href="lineages.html" class="underline">Key Lineages</a>
+    <label>
+      <input type="checkbox" id="dyslexia-toggle" />
+      Dyslexia-Friendly Font
+    </label>
+  </nav>
 
-  <main id="chart-area"></main>
+  <!-- Main Chart Area -->
+  <main id="chart-area" class="max-w-6xl mx-auto"></main>
 
+  <!-- Observable Runtime -->
   <script type="module">
     import define from "./index.js";
     import { Runtime, Inspector } from "./runtime.js";
@@ -44,18 +92,12 @@
       if (name === undefined) return new Inspector(document.querySelector("#chart-area"));
     });
 
-    // Dyslexia toggle logic
-    const toggle = document.getElementById("dyslexia-toggle");
-    toggle.addEventListener("click", () => {
-      document.body.classList.toggle("dyslexia-mode");
+    // Dyslexia font toggle
+    document.getElementById("dyslexia-toggle").addEventListener("change", function () {
+      document.body.classList.toggle("dyslexic-mode", this.checked);
     });
   </script>
+
 </body>
 
 </html>
-
-
-
-
-
-  
