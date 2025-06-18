@@ -5,12 +5,13 @@
 
 <body>
     <script type="module">
+
         import define from "./index.js";
         import { Runtime, Library, Inspector } from "./runtime.js";
-        import * as stdlib from "https://cdn.jsdelivr.net/npm/@observablehq/stdlib@5.8.8/dist/stdlib.js";
+        
+
 
         const runtime = new Runtime();
-        Library.import(stdlib, runtime);
-
         const main = runtime.module(define, Inspector.into(document.body));
+        
     </script>
