@@ -18,7 +18,11 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
 
   const labelClearance = 10;
 
-  return html`<div style="overflow-x: auto; overflow-y: hidden;">
+  const container = document.createElement("div");
+  container.style.overflowX = "auto";
+  container.style.overflowY = "hidden";
+
+  container.innerHTML = `
   <svg width="${tangleLayout.layout.width}" height="${tangleLayout.layout.height}" style="background-color: ${background_color}">
     <style>
       text {
@@ -71,6 +75,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   )}
 
   </svg>`;
+  return container;
 }
 )}
 
@@ -2298,7 +2303,7 @@ export default function define(runtime, observer) {
   main.variable(observer()).define(["md"], _9);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("_")).define("_", ["require"], __);
-  main.variable(observer("html")).define("html", ["html"], _ => _);
+  
 
   return main;
 }
