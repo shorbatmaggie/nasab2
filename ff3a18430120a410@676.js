@@ -18,21 +18,20 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
 
   const labelClearance = 10;
 
-  return svg`<svg width="${tangleLayout.layout.width}" height="${
-    tangleLayout.layout.height
-  }" style="background-color: ${background_color}">
-  <style>
-    text {
-      font-family: sans-serif;
-      font-size: 15px;
-    }
-    .node {
-      stroke-linecap: round;
-    }
-    .link {
-      fill: none;
-    }
-  </style>
+  return html`<div style="overflow-x: auto; overflow-y: hidden;">
+  <svg width="${tangleLayout.layout.width}" height="${tangleLayout.layout.height}" style="background-color: ${background_color}">
+    <style>
+      text {
+        font-family: sans-serif;
+        font-size: 15px;
+      }
+      .node {
+        stroke-linecap: round;
+      }
+      .link {
+        fill: none;
+      }
+    </style>
 
   ${tangleLayout.bundles.map((b, i) => {
     let d = b.links
