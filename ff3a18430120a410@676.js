@@ -2172,7 +2172,8 @@ function _constructTangleLayout(d3){return(
   const level_y_padding = 16;
   const metro_d = 4;
   const min_family_height = 22;
-  const generationSpacing = 120;
+  const generationSpacing = 10;
+  const bundleClearance = 200;
   
   options.c ||= 16;
   const c = options.c;
@@ -2201,7 +2202,7 @@ function _constructTangleLayout(d3){return(
       b.x =
         d3.max(b.parents, d => d.x) +
         node_width +
-        (l.bundles.length - 1 - b.i) * bundle_width;
+        (l.bundles.length - 1 - b.i) * bundle_width + bundleClearance;
       b.y = i * node_height;
     });
     i += l.length;
