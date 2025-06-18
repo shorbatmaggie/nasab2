@@ -16,6 +16,8 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   
   const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
+  const labelClearance = 30;
+
   return svg`<svg width="${tangleLayout.layout.width}" height="${
     tangleLayout.layout.height
   }" style="background-color: ${background_color}">
@@ -31,8 +33,6 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
       fill: none;
     }
   </style>
-
-const labelClearance = 30;
 
   ${tangleLayout.bundles.map((b, i) => {
     let d = b.links
