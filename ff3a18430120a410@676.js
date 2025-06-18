@@ -16,7 +16,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   
   const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
-  const labelClearance = 100;
+  const labelClearance = 10;
 
   return svg`<svg width="${tangleLayout.layout.width}" height="${
     tangleLayout.layout.height
@@ -2172,6 +2172,7 @@ function _constructTangleLayout(d3){return(
   const level_y_padding = 16;
   const metro_d = 4;
   const min_family_height = 22;
+  const generationSpacing = 120;
   
   options.c ||= 16;
   const c = options.c;
@@ -2187,7 +2188,7 @@ function _constructTangleLayout(d3){return(
     x_offset += l.bundles.length * bundle_width;
     y_offset += level_y_padding;
     l.forEach((n, i) => {
-      n.x = n.level * node_width + x_offset;
+      n.x = n.level * generationSpacing + x_offset;
       n.y = node_height + y_offset + n.height / 2;
 
       y_offset += node_height + n.height;
