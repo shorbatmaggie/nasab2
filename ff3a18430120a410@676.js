@@ -16,7 +16,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   
   const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
-  const labelClearance = 30;
+  const labelClearance = 100;
 
   return svg`<svg width="${tangleLayout.layout.width}" height="${
     tangleLayout.layout.height
