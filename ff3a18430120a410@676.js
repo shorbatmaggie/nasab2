@@ -2306,18 +2306,28 @@ require("lodash")
 
 export default function define(runtime, observer) {
   const main = runtime.module();
-  main.variable(observer()).define(["md"], _1);
-  main.variable(observer()).define(["renderChart","data"], _2);
-  main.variable(observer()).define(["md"], _3);
-  main.variable(observer("renderChart")).define("renderChart", ["color","constructTangleLayout","_","svg","background_color"], _renderChart);
+
+  // 👇 HIDDEN: Title Markdown
+  main.variable(observer("title")).define(["md"], _1);
+
+  // ✅ VISIBLE: Visualization only
+  main.variable(observer()).define(["renderChart", "data"], _2);
+
+  // 👇 HIDDEN: "## Code" header
+  main.variable(observer("codeHeader")).define(["md"], _3);
+
+  // 👇 HIDDEN: Internals
+  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color"], _renderChart);
   main.variable(observer("data")).define("data", _data);
   main.variable(observer("constructTangleLayout")).define("constructTangleLayout", ["d3"], _constructTangleLayout);
   main.variable(observer("color")).define("color", ["d3"], _color);
   main.variable(observer("background_color")).define("background_color", _background_color);
-  main.variable(observer()).define(["md"], _9);
+
+  // 👇 HIDDEN: "## Dependencies"
+  main.variable(observer("depsHeader")).define(["md"], _9);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("_")).define("_", ["require"], __);
-  
 
   return main;
+
 }
