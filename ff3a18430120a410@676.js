@@ -17,6 +17,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
   const labelClearance = 10;
+  const edgeOffset = 40; // how far to push the whole edge start rightward
 
   const container = document.createElement("div");
   container.style.overflowX = "auto";
@@ -42,7 +43,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
         fill: none;
       }
     </style>
-
+    
   ${tangleLayout.bundles.map((b, i) => {
     let d = b.links.map(l => `
       M${l.xt + edgeOffset} ${l.yt}
@@ -2184,7 +2185,7 @@ function _constructTangleLayout(d3){return(
   const bundleClearance = 200;
   const labelPadding = 500; // enough for long Arabic/English titles
   const baseGenerationSpacing = 250;
-  const edgeOffset = 40; // how far to push the whole edge start rightward
+
   
   options.c ||= 16;
   const c = options.c;
