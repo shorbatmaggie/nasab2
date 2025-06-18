@@ -17,7 +17,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
   const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
   const labelClearance = 10;
-  const edgeOffset = 40; // how far to push the whole edge start rightward
+  
 
   const container = document.createElement("div");
   container.style.overflowX = "auto";
@@ -46,12 +46,14 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
     
   ${tangleLayout.bundles.map((b, i) => {
     let d = b.links.map(l => `
-      M${l.xt + edgeOffset} ${l.yt}
-      L${l.xb - l.c1 + edgeOffset} ${l.yt}
-      A${l.c1} ${l.c1} 90 0 1 ${l.xb + edgeOffset} ${l.yt + l.c1}
-      L${l.xb + edgeOffset} ${l.ys - l.c2}
-      A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2 + edgeOffset} ${l.ys}
+      M${l.xt} ${l.yt}
+      L${l.xt + labelClearance} ${l.yt}
+      L${l.xb - l.c1} ${l.yt}
+      A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
+      L${l.xb} ${l.ys - l.c2}
+      A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
       L${l.xs} ${l.ys}`
+        
     ).join("");
     
     return `
