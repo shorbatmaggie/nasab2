@@ -1,6 +1,78 @@
 function _1(md){return(
-md`# Nasab`
+md`# Nasab2`
 )}
+
+function extractAncestry(targetId, fullData) {
+  const flat = fullData.flat();
+  const lookup = Object.fromEntries(flat.map(n => [n.id, n]));
+
+  const visited = new Set();
+  const queue = [targetId];
+
+  while (queue.length > 0) {
+    const current = queue.pop();
+    if (!visited.has(current)) {
+      visited.add(current);
+      const parents = lookup[current]?.parents || [];
+      for (const p of parents) {
+        queue.push(p);
+      }
+    }
+  }
+
+  const ancestors = flat.filter(n => visited.has(n.id));
+  ancestors.push(lookup[targetId]);
+
+  // Group by generation: order based on number of hops from roots
+  const genMap = new Map();
+
+  const assignLevel = (node, level = 0) => {
+    if (genMap.has(node.id)) return;
+    genMap.set(node.id, level);
+    for (const p of node.parents || []) {
+      assignLevel(lookup[p], level - 1);
+    }
+  };
+
+  assignLevel(lookup[targetId], 0);
+
+  const grouped = [];
+  for (const [id, level] of genMap.entries()) {
+    const node = lookup[id];
+    const gen = grouped[-level] || (grouped[-level] = []);
+    gen.push(node);
+  }
+
+  return grouped;
+}
+
+function _dropdown(fullData) {
+  const select = document.createElement("select");
+
+  // Flatten all nodes into one list
+  const flatNodes = fullData.flat();
+
+  // Filter only nodes that have parents (i.e., not root-level)
+  const candidates = flatNodes.filter(d => d.parents && d.parents.length > 0);
+
+  for (const node of candidates) {
+    const option = document.createElement("option");
+    option.value = node.id;
+    option.textContent = node.id;
+    select.appendChild(option);
+  }
+
+  select.onchange = () => {
+    const selectedID = select.value;
+    const subgraph = extractAncestry(selectedID, fullData);
+
+    // Redefine the `data` observable
+    window.setFilteredData(subgraph);
+  };
+
+  return select;
+}
+
 
 function _2(renderChart,data){return(
 renderChart(data)
@@ -86,7 +158,7 @@ function _renderChart(color,constructTangleLayout,_,svg,background_color){return
 }
 )}
 
-function _data(){
+function _fullData(){
   return(
     [
       [
@@ -2100,6 +2172,11 @@ function _data(){
   );
 }
 
+function _data(fullData) {
+  return fullData; // default: show full tree
+}
+
+
 function _constructTangleLayout(d3){return(
 (levels, options={}) => {
   // precompute level depth
@@ -2318,10 +2395,13 @@ export default function define(runtime, observer) {
 
   // 👇 HIDDEN: Internals
   main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color"], _renderChart);
-  main.variable(observer("data")).define("data", _data);
+  main.variable(observer("fullData")).define("fullData", _data);
+  main.variable(observer("data")).define("data", ["fullData"], _data);
   main.variable(observer("constructTangleLayout")).define("constructTangleLayout", ["d3"], _constructTangleLayout);
   main.variable(observer("color")).define("color", ["d3"], _color);
   main.variable(observer("background_color")).define("background_color", _background_color);
+  main.variable(observer("dropdown")).define("dropdown", ["fullData"], _dropdown);
+
 
   // 👇 HIDDEN: "## Dependencies"
   main.variable(observer("depsHeader")).define(["md"], _9);
@@ -2331,3 +2411,11 @@ export default function define(runtime, observer) {
   return main;
 
 }
+
+window.setFilteredData = function (newData) {
+  const container = document.querySelector("svg")?.parentNode?.parentNode;
+  if (container) container.remove(); // remove old chart
+  const chart = renderChart(newData); // re-render new chart
+  document.body.appendChild(chart);
+};
+
