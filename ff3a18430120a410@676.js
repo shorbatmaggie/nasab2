@@ -494,7 +494,10 @@ function _background_color() { return 'white' }
 
 function _9(md) { return (md`## Dependencies`) } // hidden
 
-function _d3(require) { return require('d3-scale', 'd3-scale-chromatic', 'd3-array') }
+function _d3(require) {
+  return require("d3");
+}
+
 
 function __(require) { return require("lodash") }
 
@@ -504,7 +507,7 @@ export default function define(runtime, observer) {
   main.variable(observer("title")).define(["md"], _1);
   main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
-  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color"], _renderChart);
+  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color", "d3"], _renderChart);
   main.value("renderChart").then(fn => window.renderChart = fn);
   main.variable(observer("fullData")).define("fullData", _fullData);
   main.variable(observer("data")).define("data", ["fullData"], _data);
