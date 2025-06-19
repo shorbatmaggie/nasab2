@@ -101,7 +101,7 @@ function _dropdown(fullData) {
   const flat = fullData.flat();
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
 
-  const createDropdown = (labelText, onChangeFn, id, typeLabel) => {
+  const createDropdown = (labelText, onChangeFn, id) => {
     const label = document.createElement("label");
     label.setAttribute("for", id);
     label.className = "block font-semibold mb-1";
@@ -115,10 +115,10 @@ function _dropdown(fullData) {
     // Add blank option
     const blank = document.createElement("option");
     blank.value = "";
-    blank.textContent = "Select a Text";
+    blank.textContent = " Select a Text";
     select.appendChild(blank);
 
-    // Populate options
+    // Add options
     for (const node of sorted) {
       const option = document.createElement("option");
       option.value = node.id;
@@ -126,30 +126,28 @@ function _dropdown(fullData) {
       select.appendChild(option);
     }
 
-    // Hook up event
-    select.onchange = () => {
+    // OnChange logic
+    select.onchange = ((label, handler) => () => {
       const selectedID = select.value;
       if (!selectedID) return;
 
-      const subgraph = onChangeFn(selectedID, fullData);
+      const subgraph = handler(selectedID, fullData);
 
-      const chartArea = document.getElementById("chart-area");
-      const oldChart = chartArea.querySelector("svg")?.parentNode?.parentNode;
-      if (oldChart) oldChart.remove();
-
+      // Check for orphan (1 node, 1 level)
       if (subgraph.length === 1 && subgraph[0].length === 1) {
-        const msg = document.createElement("div");
-        msg.className = "text-center text-gray-500 italic py-8";
-        msg.textContent = `No ${typeLabel} found for this text.`;
-        chartArea.appendChild(msg);
+        document.getElementById("chart-area").innerHTML = `
+          <div class="text-center text-gray-500 italic py-8">
+            None found.
+          </div>
+        `;
       } else {
         window.setFilteredData(subgraph);
       }
-    };
+    })(labelText, onChangeFn);
+    
 
     return [label, select];
   };
-  
 
   // === DOM STRUCTURE ===
 
@@ -160,9 +158,8 @@ function _dropdown(fullData) {
   title.className = "text-xl font-bold mb-2";
   title.textContent = "Explore a Genealogy";
 
-  const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select", "ancestry");
-  const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select", "descendants");
-
+  const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select");
+  const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select");
 
   const resetBtn = document.createElement("button");
   resetBtn.textContent = "Reset to Full Tree";
