@@ -540,8 +540,9 @@ export default function define(runtime, observer) {
   main.variable(observer("background_color")).define("background_color", _background_color);
   main.variable(observer()).define(["fullData"], _dropdown);
   main.variable(observer("depsHeader")).define(["md"], _9);
-  main.variable(observer("d3")).define("d3", ["require"], _d3);
+  main.variable(observer("d3")).define("d3", ["require"], r => r("d3"));
   main.variable(observer("_")).define("_", ["require"], __);
+  
 
   return main;
 }
