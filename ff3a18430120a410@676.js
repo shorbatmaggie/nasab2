@@ -2370,16 +2370,24 @@ function _constructTangleLayout(d3){return(
 
   var x_offset = padding;
   var y_offset = padding;
-  levels.forEach(l => {
-    x_offset += l.bundles.length * bundle_width + baseGenerationSpacing;
-    y_offset += level_y_padding;
-    l.forEach((n, i) => {
-      n.x = n.level * generationSpacing + x_offset;
-      n.y = node_height + y_offset + n.height / 2;
+  if (levels.length === 1 && levels[0].length === 1) {
+    // Single-node orphan: center it
+    const n = levels[0][0];
+    n.x = minContentWidth / 2; // center in SVG
+    n.y = 100; // arbitrary vertical spacing
+  } else {
+    // Normal multi-node layout
+    levels.forEach(l => {
+      x_offset += l.bundles.length * bundle_width + baseGenerationSpacing;
+      y_offset += level_y_padding;
+      l.forEach((n, i) => {
+        n.x = n.level * generationSpacing + x_offset;
+        n.y = node_height + y_offset + n.height / 2;
 
-      y_offset += node_height + n.height;
+        y_offset += node_height + n.height;
+      });
     });
-  });
+  }
 
   var i = 0;
   levels.forEach(l => {
