@@ -86,8 +86,17 @@ function extractDescendants(targetId, fullData) {
     gen.push(node);
   }
 
+  // ✅ Sanity patch: remove references to parents not included in this subgraph
+  const validIDs = new Set(descendants.map(n => n.id));
+  for (const level of grouped) {
+    for (const node of level) {
+      node.parents = (node.parents || []).filter(p => validIDs.has(p));
+    }
+  }
+
   return grouped;
 }
+
 
 function _dropdown(fullData) {
   const wrapper = document.createElement("div");
