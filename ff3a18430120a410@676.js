@@ -221,47 +221,48 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       
 
       container.innerHTML = `
-      <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
-        <style>
-          text {
-            font-family: sans-serif;
-            font-size: 16px;
-          }
-          .node { stroke-linecap: round; }
-          .link { fill: none; }
-        </style>
-        <g id="zoom-group">
-          ${tangleLayout.bundles.map((b, i) => {
+  <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
+    <style>
+      text {
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+      .node { stroke-linecap: round; }
+      .link { fill: none; }
+    </style>
+    <g id="zoom-group">
+      ${tangleLayout.bundles.map((b, i) => {
         const d = b.links.map(l => `
-              M${l.xt} ${l.yt}
-              L${l.xt + labelClearance} ${l.yt}
-              L${l.xb - l.c1} ${l.yt}
-              A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
-              L${l.xb} ${l.ys - l.c2}
-              A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
-              L${l.xs} ${l.ys}
-            `).join("");
+          M${l.xt} ${l.yt}
+          L${l.xt + labelClearance} ${l.yt}
+          L${l.xb - l.c1} ${l.yt}
+          A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
+          L${l.xb} ${l.ys - l.c2}
+          A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
+          L${l.xs} ${l.ys}
+        `).join("");
 
         return `
-              <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
-              <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
-            `;
+          <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
+          <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
+        `;
       }).join("")}
-    
-          ${tangleLayout.nodes.map(n => `
-            <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
-                  d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-            <path class="node" stroke="white" stroke-width="4"
-                  d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-            <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" stroke="${background_color}" stroke-width="2">
-              ${n.id}
-              <title>Author: ${n.author} (d. ${n.death} AH)</title>
-            </text>
-            <text x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" style="pointer-events: none;">${n.id}</text>
-          `).join("")}
-        </g>
-      </svg>
-    `;
+
+      ${tangleLayout.nodes.map(n => `
+        <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
+              d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
+        <path class="node" stroke="white" stroke-width="4"
+              d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
+        <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" stroke="${background_color}" stroke-width="2">
+          ${n.id}
+          <title>Author: ${n.author} (d. ${n.death} AH)</title>
+        </text>
+        <text x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" style="pointer-events: none;">${n.id}</text>
+      `).join("")}
+    </g>
+  </svg>
+`;
+
 
       const svgEl = container.querySelector("svg");
       const zoomGroup = container.querySelector("#zoom-group");
@@ -270,7 +271,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       const d3g = d3.select(zoomGroup);
 
       const zoom = d3.zoom()
-        .scaleExtent([0.3, 4]) // zoom out to 30%, in to 400%
+        .scaleExtent([0.3, 4])
         .on("zoom", (event) => {
           d3g.attr("transform", event.transform);
         });
@@ -495,9 +496,7 @@ function _background_color() { return 'white' }
 function _9(md) { return (md`## Dependencies`) } // hidden
 
 function _d3(require) {
-  return require("d3");
-}
-
+  return require('d3-scale', 'd3-scale-chromatic', 'd3-array', 'd3-selection', 'd3-zoom') }
 
 function __(require) { return require("lodash") }
 
@@ -507,7 +506,7 @@ export default function define(runtime, observer) {
   main.variable(observer("title")).define(["md"], _1);
   main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
-  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color", "d3"], _renderChart);
+  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color"], _renderChart);
   main.value("renderChart").then(fn => window.renderChart = fn);
   main.variable(observer("fullData")).define("fullData", _fullData);
   main.variable(observer("data")).define("data", ["fullData"], _data);
