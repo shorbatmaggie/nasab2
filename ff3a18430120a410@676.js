@@ -187,6 +187,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
 
       const labelClearance = 10;
       const container = document.createElement("div");
+      container.style.width = `${tangleLayout.layout.width}px`;
       container.style.overflowX = "auto";
       container.style.overflowY = "hidden";
       container.style.maxWidth = "100%";
