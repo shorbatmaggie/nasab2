@@ -101,7 +101,7 @@ function _dropdown(fullData) {
   const flat = fullData.flat();
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
 
-  const createDropdown = (labelText, onChangeFn, id) => {
+  const createDropdown = (labelText, onChangeFn, id, typeLabel) => {
     const label = document.createElement("label");
     label.setAttribute("for", id);
     label.className = "block font-semibold mb-1";
@@ -115,10 +115,10 @@ function _dropdown(fullData) {
     // Add blank option
     const blank = document.createElement("option");
     blank.value = "";
-    blank.textContent = " Select a Text";
+    blank.textContent = "Select a Text";
     select.appendChild(blank);
 
-    // Add options
+    // Populate options
     for (const node of sorted) {
       const option = document.createElement("option");
       option.value = node.id;
@@ -126,28 +126,30 @@ function _dropdown(fullData) {
       select.appendChild(option);
     }
 
-    // OnChange logic
-    select.onchange = ((label, handler) => () => {
+    // Hook up event
+    select.onchange = () => {
       const selectedID = select.value;
       if (!selectedID) return;
 
-      const subgraph = handler(selectedID, fullData);
+      const subgraph = onChangeFn(selectedID, fullData);
 
-      // Check for orphan (1 node, 1 level)
+      const chartArea = document.getElementById("chart-area");
+      const oldChart = chartArea.querySelector("svg")?.parentNode?.parentNode;
+      if (oldChart) oldChart.remove();
+
       if (subgraph.length === 1 && subgraph[0].length === 1) {
-        document.getElementById("chart-area").innerHTML = `
-          <div class="text-center text-gray-500 italic py-8">
-            No ${typeLabel} found for this text.
-          </div>
-        `;
+        const msg = document.createElement("div");
+        msg.className = "text-center text-gray-500 italic py-8";
+        msg.textContent = `No ${typeLabel} found for this text.`;
+        chartArea.appendChild(msg);
       } else {
         window.setFilteredData(subgraph);
       }
-    })(labelText, onChangeFn);
-    
+    };
 
     return [label, select];
   };
+  
 
   // === DOM STRUCTURE ===
 
