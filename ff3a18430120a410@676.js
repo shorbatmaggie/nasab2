@@ -137,7 +137,7 @@ function _dropdown(fullData) {
       if (subgraph.length === 1 && subgraph[0].length === 1) {
         document.getElementById("chart-area").innerHTML = `
           <div class="text-center text-gray-500 italic py-8">
-            This text has no ${label.toLowerCase().replace("view ", "")} found for this text.
+            This text has no ${label.toLowerCase().replace("view ", "")}.
           </div>
         `;
       } else {
