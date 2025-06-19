@@ -114,13 +114,14 @@ function _dropdown(fullData) {
       select.appendChild(option);
     }
 
-    select.onchange = () => {
+    select.onchange = ((label, handler) => () => {
       const selectedID = select.value;
-      const subgraph = onChangeFn(selectedID, fullData);
+      const subgraph = handler(selectedID, fullData);
+      console.log(label, "selected ID:", selectedID);
+      console.log(label, "subgraph:", subgraph);
       window.setFilteredData(subgraph);
-      console.log(labelText, "selected ID:", selectedID);
-      console.log(labelText, "subgraph:", subgraph);
-    };
+    })(labelText, onChangeFn);
+    
 
     label.appendChild(select);
     return label;
