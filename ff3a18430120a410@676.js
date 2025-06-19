@@ -221,46 +221,61 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       
 
       container.innerHTML = `
-    <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
-      <style>
-        text {
-          font-family: sans-serif;
-          font-size: 16px;
-        }
-        .node { stroke-linecap: round; }
-        .link { fill: none; }
-      </style>
-
-      ${tangleLayout.bundles.map((b, i) => {
+      <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
+        <style>
+          text {
+            font-family: sans-serif;
+            font-size: 16px;
+          }
+          .node { stroke-linecap: round; }
+          .link { fill: none; }
+        </style>
+        <g id="zoom-group">
+          ${tangleLayout.bundles.map((b, i) => {
         const d = b.links.map(l => `
-          M${l.xt} ${l.yt}
-          L${l.xt + labelClearance} ${l.yt}
-          L${l.xb - l.c1} ${l.yt}
-          A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
-          L${l.xb} ${l.ys - l.c2}
-          A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
-          L${l.xs} ${l.ys}
-        `).join("");
+              M${l.xt} ${l.yt}
+              L${l.xt + labelClearance} ${l.yt}
+              L${l.xb - l.c1} ${l.yt}
+              A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
+              L${l.xb} ${l.ys - l.c2}
+              A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
+              L${l.xs} ${l.ys}
+            `).join("");
 
         return `
-          <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
-          <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
-        `;
+              <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
+              <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
+            `;
       }).join("")}
-
-      ${tangleLayout.nodes.map(n => `
-        <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
-              d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-        <path class="node" stroke="white" stroke-width="4"
-              d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-        <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" stroke="${background_color}" stroke-width="2">
-          ${n.id}
-          <title>Author: ${n.author} (d. ${n.death} AH)</title>
-        </text>
-        <text x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" style="pointer-events: none;">${n.id}</text>
-      `).join("")}
-    </svg>
+    
+          ${tangleLayout.nodes.map(n => `
+            <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
+                  d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
+            <path class="node" stroke="white" stroke-width="4"
+                  d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
+            <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" stroke="${background_color}" stroke-width="2">
+              ${n.id}
+              <title>Author: ${n.author} (d. ${n.death} AH)</title>
+            </text>
+            <text x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" style="pointer-events: none;">${n.id}</text>
+          `).join("")}
+        </g>
+      </svg>
     `;
+
+      const svgEl = container.querySelector("svg");
+      const zoomGroup = container.querySelector("#zoom-group");
+
+      const d3svg = d3.select(svgEl);
+      const d3g = d3.select(zoomGroup);
+
+      const zoom = d3.zoom()
+        .scaleExtent([0.3, 4]) // zoom out to 30%, in to 400%
+        .on("zoom", (event) => {
+          d3g.attr("transform", event.transform);
+        });
+
+      d3svg.call(zoom);
 
       return container;
     }
