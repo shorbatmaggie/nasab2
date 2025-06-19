@@ -2434,6 +2434,7 @@ export default function define(runtime, observer) {
   main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
   main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color"], _renderChart);
+  main.value("renderChart").then(fn => window.renderChart = fn);
   main.variable(observer("fullData")).define("fullData", _fullData);
   main.variable(observer("data")).define("data", ["fullData"], _data);
   main.variable(observer("constructTangleLayout")).define("constructTangleLayout", ["d3"], _constructTangleLayout);
