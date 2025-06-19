@@ -97,25 +97,28 @@ function extractDescendants(targetId, fullData) {
   return grouped;
 }
 
-
 function _dropdown(fullData) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "space-y-2 p-4 rounded shadow";
-  wrapper.style.backgroundColor = "#FFFFFF";
-  wrapper.style.color = "#588B8B";
-
   const flat = fullData.flat();
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
 
-  const createDropdown = (labelText, onChangeFn) => {
+  const createDropdown = (labelText, onChangeFn, id) => {
     const label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.className = "block font-semibold mb-1";
     label.textContent = labelText;
-    label.style.display = "block";
 
     const select = document.createElement("select");
-    select.className = "p-2 border rounded w-full";
+    select.id = id;
+    select.className = "w-full mb-4 p-2 border border-gray-300 rounded";
     select.style.backgroundColor = "#F5F5F5";
 
+    // Add blank option
+    const blank = document.createElement("option");
+    blank.value = "";
+    blank.textContent = "-- Select a Node --";
+    select.appendChild(blank);
+
+    // Add options
     for (const node of sorted) {
       const option = document.createElement("option");
       option.value = node.id;
@@ -123,44 +126,50 @@ function _dropdown(fullData) {
       select.appendChild(option);
     }
 
+    // OnChange logic
     select.onchange = ((label, handler) => () => {
       const selectedID = select.value;
+      if (!selectedID) return;
       const subgraph = handler(selectedID, fullData);
       console.log(label, "selected ID:", selectedID);
       console.log(label, "subgraph:", subgraph);
       window.setFilteredData(subgraph);
     })(labelText, onChangeFn);
-    
 
-    label.appendChild(select);
-    return label;
+    return [label, select];
   };
 
-  // Ancestry dropdown
-  const ancestryDropdown = createDropdown("View Ancestry:", extractAncestry);
-  
+  // === DOM STRUCTURE ===
 
-  // Descendant dropdown
-  const descendantDropdown = createDropdown("View Descendants:", extractDescendants);
+  const section = document.createElement("section");
+  section.className = "p-4 bg-white text-[#588B8B] rounded-xl shadow";
 
-  // Reset button
-  const reset = document.createElement("button");
-  reset.textContent = "Reset to Full Tree";
-  reset.className = "px-4 py-1 rounded text-white";
-  reset.style.backgroundColor = "#588B8B";
-  reset.onclick = () => window.setFilteredData(fullData);
+  const title = document.createElement("h2");
+  title.className = "text-xl font-bold mb-2";
+  title.textContent = "Explore a Genealogy";
 
-  // Append all to wrapper
-  wrapper.appendChild(ancestryDropdown);
-  wrapper.appendChild(descendantDropdown);
-  wrapper.appendChild(reset);
+  const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select");
+  const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select");
 
-  // Mount the dropdown above the SVG
+  const resetBtn = document.createElement("button");
+  resetBtn.textContent = "Reset to Full Tree";
+  resetBtn.className = "mt-2 px-4 py-2 rounded shadow";
+  resetBtn.style.backgroundColor = "#588B8B";
+  resetBtn.style.color = "white";
+  resetBtn.onclick = () => window.setFilteredData(fullData);
+
+  section.append(title, ancestryLabel, ancestrySelect, descendantLabel, descendantSelect, resetBtn);
+
+  const outer = document.createElement("div");
+  outer.className = "max-w-4xl mx-auto";
+  outer.appendChild(section);
+
   const chartContainer = document.querySelector("#chart-area");
-  chartContainer?.parentNode?.insertBefore(wrapper, chartContainer);
+  chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
-  return wrapper;
+  return outer;
 }
+
 
 function _2(renderChart, data) {
   return (
@@ -2338,6 +2347,7 @@ function _constructTangleLayout(d3){return(
   const bundleClearance = 300;
   const labelPadding = 500; // enough for long Arabic/English titles
   const baseGenerationSpacing = 250;
+  const minContentWidth = 896; // Tailwind's max-w-4xl = 56rem = 896px
 
   
   options.c ||= 16;
@@ -2412,7 +2422,7 @@ function _constructTangleLayout(d3){return(
   var layout = {
     width: Math.max(
       d3.max(nodes, n => n.x + node_width + labelPadding),
-      d3.max(bundles, b => b.x + bundle_width)
+      d3.max(bundles, b => b.x + bundle_width), minContentWidth
     ) + 2 * padding,
 
     height: Math.max(
