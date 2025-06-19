@@ -166,7 +166,18 @@ function _dropdown(fullData) {
   resetBtn.className = "mt-2 px-4 py-2 rounded shadow";
   resetBtn.style.backgroundColor = "#588B8B";
   resetBtn.style.color = "white";
-  resetBtn.onclick = () => window.setFilteredData(fullData);
+  
+  resetBtn.onclick = () => {
+    window.setFilteredData(fullData);
+
+    // Reset dropdowns
+    const ancestrySelect = document.getElementById("ancestry-select");
+    const descendantSelect = document.getElementById("descendant-select");
+
+    if (ancestrySelect) ancestrySelect.value = "";
+    if (descendantSelect) descendantSelect.value = "";
+  };
+  
 
   section.append(title, ancestryLabel, ancestrySelect, descendantLabel, descendantSelect, resetBtn);
 
