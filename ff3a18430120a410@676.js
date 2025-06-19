@@ -115,7 +115,7 @@ function _dropdown(fullData) {
     // Add blank option
     const blank = document.createElement("option");
     blank.value = "";
-    blank.textContent = "-- Select a Node --";
+    blank.textContent = " Select a Text";
     select.appendChild(blank);
 
     // Add options
@@ -161,7 +161,7 @@ function _dropdown(fullData) {
   section.append(title, ancestryLabel, ancestrySelect, descendantLabel, descendantSelect, resetBtn);
 
   const outer = document.createElement("div");
-  outer.className = "max-w-4xl mx-auto";
+  outer.className = "max-w-7xl mx-auto";
   outer.appendChild(section);
 
   const chartContainer = document.querySelector("#chart-area");
@@ -2347,7 +2347,9 @@ function _constructTangleLayout(d3){return(
   const bundleClearance = 300;
   const labelPadding = 500; // enough for long Arabic/English titles
   const baseGenerationSpacing = 250;
-  const minContentWidth = 896; // Tailwind's max-w-4xl = 56rem = 896px
+  const minContentWidth = 1280;
+  
+  
 
   
   options.c ||= 16;
