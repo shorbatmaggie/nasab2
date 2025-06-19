@@ -2450,8 +2450,8 @@ export default function define(runtime, observer) {
 }
 
 window.setFilteredData = function (newData) {
-  const container = document.querySelector("svg")?.parentNode?.parentNode;
-  if (container) container.remove();
+  const chartArea = document.querySelector("#chart-area");
+  if (chartArea) chartArea.innerHTML = "";
   const chart = window.renderChart(newData);
   document.querySelector("#chart-area")?.appendChild(chart);
 };
