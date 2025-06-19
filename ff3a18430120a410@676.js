@@ -220,52 +220,94 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       container.style.marginTop = "2rem"; // ✅ space below dropdown
       
 
-      container.innerHTML = `
-    <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
-      <style>
-        text {
-          font-family: sans-serif;
-          font-size: 16px;
-        }
-        .node { stroke-linecap: round; }
-        .link { fill: none; }
-      </style>
+      function _renderChart(color, constructTangleLayout, _, svg, background_color) {
+        return (data, options = {}) => {
+          options.color ||= (d, i) => color(i);
+          const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
-      ${tangleLayout.bundles.map((b, i) => {
-        const d = b.links.map(l => `
-          M${l.xt} ${l.yt}
-          L${l.xt + labelClearance} ${l.yt}
-          L${l.xb - l.c1} ${l.yt}
-          A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
-          L${l.xb} ${l.ys - l.c2}
-          A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
-          L${l.xs} ${l.ys}
-        `).join("");
+          const svgWidth = tangleLayout.layout.width;
+          const svgHeight = tangleLayout.layout.height;
+          const labelClearance = 10;
 
-        return `
-          <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
-          <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
-        `;
-      }).join("")}
+          const container = document.createElement("div");
+          container.style.overflowX = "auto";
+          container.style.overflowY = "hidden";
+          container.style.maxWidth = "100%";
+          container.style.display = "block";
+          container.style.minWidth = "1280px";
+          container.style.width = `${svgWidth}px`;
+          container.style.marginTop = "2rem";
 
-      ${tangleLayout.nodes.map(n => `
-        <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
-              d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-        <path class="node" stroke="white" stroke-width="4"
-              d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-        <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" stroke="${background_color}" stroke-width="2">
-          ${n.id}
-          <title>Author: ${n.author} (d. ${n.death} AH)</title>
-        </text>
-        <text x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" style="pointer-events: none;">${n.id}</text>
-      `).join("")}
-    </svg>
-    `;
+          // Create SVG + <g> wrapper
+          const svgEl = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svgEl.setAttribute("width", svgWidth);
+          svgEl.setAttribute("height", svgHeight);
+          svgEl.style.backgroundColor = background_color;
 
-      return container;
-    }
-  )
-}
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          svgEl.appendChild(g);
+
+          // Inject <style> block
+          const styleTag = document.createElement("style");
+          styleTag.textContent = `
+            text {
+              font-family: sans-serif;
+              font-size: 16px;
+            }
+            .node { stroke-linecap: round; }
+            .link { fill: none; }
+          `;
+          svgEl.appendChild(styleTag);
+
+          // Add bundles
+          g.innerHTML += tangleLayout.bundles.map((b, i) => {
+            const d = b.links.map(l => `
+              M${l.xt} ${l.yt}
+              L${l.xt + labelClearance} ${l.yt}
+              L${l.xb - l.c1} ${l.yt}
+              A${l.c1} ${l.c1} 90 0 1 ${l.xb} ${l.yt + l.c1}
+              L${l.xb} ${l.ys - l.c2}
+              A${l.c2} ${l.c2} 90 0 0 ${l.xb + l.c2} ${l.ys}
+              L${l.xs} ${l.ys}
+            `).join("");
+
+            return `
+              <path class="link" d="${d}" stroke="${background_color}" stroke-width="5"/>
+              <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
+            `;
+          }).join("");
+
+          // Add nodes
+          g.innerHTML += tangleLayout.nodes.map(n => `
+            <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
+                  d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
+            <path class="node" stroke="white" stroke-width="4"
+                  d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
+            <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" stroke="${background_color}" stroke-width="2">
+              ${n.id}
+              <title>Author: ${n.author} (d. ${n.death} AH)</title>
+            </text>
+            <text x="${n.x + 4}" y="${n.y - n.height / 2 - 4}" style="pointer-events: none;">${n.id}</text>
+          `).join("");
+
+          container.appendChild(svgEl);
+
+          // === Add Zoom Behavior ===
+          const d3svg = d3.select(svgEl);
+          const d3g = d3.select(g);
+
+          const zoom = d3.zoom()
+            .scaleExtent([0.3, 4]) // min and max zoom
+            .on("zoom", (event) => {
+              d3g.attr("transform", event.transform);
+            });
+
+          d3svg.call(zoom);
+
+          return container;
+        };
+      }
+      
 
 function _fullData() {
   return fetch("commentaries_observable_nested.json")
