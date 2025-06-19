@@ -137,7 +137,7 @@ function _dropdown(fullData) {
       if (subgraph.length === 1 && subgraph[0].length === 1) {
         document.getElementById("chart-area").innerHTML = `
           <div class="text-center text-gray-500 italic py-8">
-            This text has no ${label.toLowerCase().replace("view ", "")}.
+            No ${typeLabel} found for this text.
           </div>
         `;
       } else {
@@ -158,8 +158,9 @@ function _dropdown(fullData) {
   title.className = "text-xl font-bold mb-2";
   title.textContent = "Explore a Genealogy";
 
-  const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select");
-  const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select");
+  const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select", "ancestry");
+  const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select", "descendants");
+
 
   const resetBtn = document.createElement("button");
   resetBtn.textContent = "Reset to Full Tree";
