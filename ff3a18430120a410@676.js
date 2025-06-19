@@ -192,6 +192,8 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       container.style.overflowY = "hidden";
       container.style.maxWidth = "100%";
       container.style.display = "block";
+      container.style.minWidth = "1280px";
+
 
       container.innerHTML = `
     <svg width="${tangleLayout.layout.width}" height="${tangleLayout.layout.height}" style="background-color: ${background_color}">
