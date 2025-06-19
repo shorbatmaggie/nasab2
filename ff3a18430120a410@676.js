@@ -118,6 +118,8 @@ function _dropdown(fullData) {
       const selectedID = select.value;
       const subgraph = onChangeFn(selectedID, fullData);
       window.setFilteredData(subgraph);
+      console.log(labelText, "selected ID:", selectedID);
+      console.log(labelText, "subgraph:", subgraph);
     };
 
     label.appendChild(select);
@@ -126,6 +128,7 @@ function _dropdown(fullData) {
 
   // Ancestry dropdown
   const ancestryDropdown = createDropdown("View Ancestry:", extractAncestry);
+  
 
   // Descendant dropdown
   const descendantDropdown = createDropdown("View Descendants:", extractDescendants);
