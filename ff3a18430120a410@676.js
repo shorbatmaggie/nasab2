@@ -36,7 +36,8 @@ function extractAncestry(targetId, fullData) {
     gen.push(node);
   }
 
-  return grouped;
+  return grouped.reverse();
+
 }
 
 function extractDescendants(targetId, fullData) {
