@@ -185,18 +185,22 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       options.color ||= (d, i) => color(i);
       const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
 
+      const svgWidth = tangleLayout.layout.width;
+      const svgHeight = tangleLayout.layout.height;
       const labelClearance = 10;
+
       const container = document.createElement("div");
-      container.style.width = `${tangleLayout.layout.width}px`;
       container.style.overflowX = "auto";
       container.style.overflowY = "hidden";
       container.style.maxWidth = "100%";
       container.style.display = "block";
-      container.style.minWidth = "1280px";
-
+      container.style.minWidth = "1280px"; // fallback safeguard
+      container.style.width = `${svgWidth}px`; // lock width to layout
+      container.style.marginTop = "2rem"; // ✅ space below dropdown
+      container.style.backgroundColor = "#fdd"; // 🧪 debug only
 
       container.innerHTML = `
-    <svg width="${tangleLayout.layout.width}" height="${tangleLayout.layout.height}" style="background-color: ${background_color}">
+    <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
       <style>
         text {
           font-family: sans-serif;
@@ -205,7 +209,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
         .node { stroke-linecap: round; }
         .link { fill: none; }
       </style>
-  
+
       ${tangleLayout.bundles.map((b, i) => {
         const d = b.links.map(l => `
           M${l.xt} ${l.yt}
@@ -222,7 +226,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
           <path class="link" d="${d}" stroke="${options.color(b, i)}" stroke-width="2"/>
         `;
       }).join("")}
-  
+
       ${tangleLayout.nodes.map(n => `
         <path class="selectable node" data-id="${n.id}" stroke="black" stroke-width="8"
               d="M${n.x} ${n.y - n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
@@ -241,6 +245,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
     }
   )
 }
+
 
 function _fullData(){
   return(
