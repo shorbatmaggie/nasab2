@@ -130,11 +130,21 @@ function _dropdown(fullData) {
     select.onchange = ((label, handler) => () => {
       const selectedID = select.value;
       if (!selectedID) return;
+
       const subgraph = handler(selectedID, fullData);
-      console.log(label, "selected ID:", selectedID);
-      console.log(label, "subgraph:", subgraph);
-      window.setFilteredData(subgraph);
+
+      // Check for orphan (1 node, 1 level)
+      if (subgraph.length === 1 && subgraph[0].length === 1) {
+        document.getElementById("chart-area").innerHTML = `
+          <div class="text-center text-gray-500 italic py-8">
+            This text has no ${label.toLowerCase().replace("view ", "")}.
+          </div>
+        `;
+      } else {
+        window.setFilteredData(subgraph);
+      }
     })(labelText, onChangeFn);
+    
 
     return [label, select];
   };
@@ -194,10 +204,9 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color) {
       container.style.overflowY = "hidden";
       container.style.maxWidth = "100%";
       container.style.display = "block";
-      container.style.minWidth = "1280px"; // fallback safeguard
       container.style.width = `${svgWidth}px`; // lock width to layout
       container.style.marginTop = "2rem"; // ✅ space below dropdown
-      container.style.backgroundColor = "#fdd"; // 🧪 debug only
+      
 
       container.innerHTML = `
     <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
@@ -2355,7 +2364,7 @@ function _constructTangleLayout(d3){return(
   const bundleClearance = 300;
   const labelPadding = 500; // enough for long Arabic/English titles
   const baseGenerationSpacing = 250;
-  const minContentWidth = 1280;
+ 
   
   
 
@@ -2371,11 +2380,6 @@ function _constructTangleLayout(d3){return(
   var x_offset = padding;
   var y_offset = padding;
   if (levels.length === 1 && levels[0].length === 1) {
-    // Single-node orphan: center it
-    const n = levels[0][0];
-    n.x = minContentWidth / 2; // center in SVG
-    n.y = 100; // arbitrary vertical spacing
-  } else {
     // Normal multi-node layout
     levels.forEach(l => {
       x_offset += l.bundles.length * bundle_width + baseGenerationSpacing;
@@ -2440,7 +2444,7 @@ function _constructTangleLayout(d3){return(
   var layout = {
     width: Math.max(
       d3.max(nodes, n => n.x + node_width + labelPadding),
-      d3.max(bundles, b => b.x + bundle_width), minContentWidth
+      d3.max(bundles, b => b.x + bundle_width)
     ) + 2 * padding,
 
     height: Math.max(
