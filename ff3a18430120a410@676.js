@@ -155,7 +155,7 @@ function _2(renderChart, data) {
   )
 }
 
-function _3(md) { return (md`## Code`) } // hidden
+function _3(md) { return (md`## Code`) } 
 
 function _renderChart(color, constructTangleLayout, _, svg, background_color) {
   return (
@@ -2452,6 +2452,6 @@ export default function define(runtime, observer) {
 window.setFilteredData = function (newData) {
   const container = document.querySelector("svg")?.parentNode?.parentNode;
   if (container) container.remove();
-  const chart = renderChart(newData);
-  document.body.appendChild(chart);
+  const chart = window.renderChart(newData);
+  document.querySelector("#chart-area")?.appendChild(chart);
 };
