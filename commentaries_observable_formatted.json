@@ -108,8 +108,8 @@
     "author": "al-Isnawī"
   },
   {
-    "id": "Ḥāshiya[t al-Ḥusayn Ābādī] ʿalā Bāb al-Farāʾiḍ min Tuḥfat al-Muḥtāj ",
-    "label": "Ḥāshiya[t al-Ḥusayn Ābādī] ʿalā Bāb al-Farāʾiḍ min Tuḥfat al-Muḥtāj ",
+    "id": "Ḥāshiya[t al-Ḥusayn Ābādī] ʿalā Bāb al-Farāʾiḍ",
+    "label": "Ḥāshiya[t al-Ḥusayn Ābādī] ʿalā Bāb al-Farāʾiḍ",
     "parents": [
       "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]"
     ],
@@ -431,7 +431,7 @@
     "id": "Nihāyat al-Zayn fī Irshād al-Mubtadiʾīn",
     "label": "Nihāyat al-Zayn fī Irshād al-Mubtadiʾīn",
     "parents": [
-      "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn bi-Muhimmāt al-Dīn"
+      "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn "
     ],
     "death": 1316,
     "author": "al-Jāwī"
@@ -981,8 +981,8 @@
     "author": "Ibn Sumīṭ"
   },
   {
-    "id": "Kashf al-Ḥijāb wa-Lubb al-Lubāb Mukhtaṣar Sharḥ al-Manhaj",
-    "label": "Kashf al-Ḥijāb wa-Lubb al-Lubāb Mukhtaṣar Sharḥ al-Manhaj",
+    "id": "Kashf al-Ḥijāb wa-Lubb al-Lubāb ",
+    "label": "Kashf al-Ḥijāb wa-Lubb al-Lubāb ",
     "parents": [
       "Manhaj al-Ṭullāb"
     ],
@@ -1447,8 +1447,8 @@
     "author": "Abū al-Faḍl al-Dimashqī"
   },
   {
-    "id": "al-Kashf al-Mujallī fī al-Kalām ʿalā al-Minhāj wa-l-Shāriḥ al-Maḥallī",
-    "label": "al-Kashf al-Mujallī fī al-Kalām ʿalā al-Minhāj wa-l-Shāriḥ al-Maḥallī",
+    "id": "al-Kashf al-Mujallī ",
+    "label": "al-Kashf al-Mujallī ",
     "parents": [
       "Kanz al-Rāghibīn fī Sharḥ Minhāj al-Ṭālibīn [li-l-Maḥallī]"
     ],
@@ -1483,8 +1483,8 @@
     "author": "al-Sanandajī"
   },
   {
-    "id": "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn bi-Muhimmāt al-Dīn",
-    "label": "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn bi-Muhimmāt al-Dīn",
+    "id": "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn ",
+    "label": "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn ",
     "parents": [
       "Qurrat al-ʿAyn bi-Muhimmāt al-Dīn"
     ],
@@ -1510,8 +1510,8 @@
     "author": "al-Sharwānī"
   },
   {
-    "id": "Ḥāshiya[t al-Ḥaydarī] ʿalā Bāb al-Farāʾiḍ min Tuḥfat al-Muḥtāj li-Ibn Ḥajar",
-    "label": "Ḥāshiya[t al-Ḥaydarī] ʿalā Bāb al-Farāʾiḍ min Tuḥfat al-Muḥtāj li-Ibn Ḥajar",
+    "id": "Ḥāshiya[t al-Ḥaydarī] ʿalā Bāb al-Farāʾiḍ",
+    "label": "Ḥāshiya[t al-Ḥaydarī] ʿalā Bāb al-Farāʾiḍ",
     "parents": [
       "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]"
     ],
@@ -1612,7 +1612,7 @@
     "id": "Ḥāshiyat Iʿānat al-Ṭālibīn ʿalā Ḥall Alfāẓ Fatḥ al-Muʿīn ",
     "label": "Ḥāshiyat Iʿānat al-Ṭālibīn ʿalā Ḥall Alfāẓ Fatḥ al-Muʿīn ",
     "parents": [
-      "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn bi-Muhimmāt al-Dīn"
+      "Fatḥ al-Muʿīn bi-Sharḥ Qurrat al-ʿAyn "
     ],
     "death": 1310,
     "author": "al-Bakrī al-Dimyāṭī"
