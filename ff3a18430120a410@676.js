@@ -210,6 +210,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       const svgHeight = tangleLayout.layout.height;
       const labelClearance = 10;
 
+      // Container setup
       const container = document.createElement("div");
       container.style.overflowX = "auto";
       container.style.overflowY = "hidden";
@@ -217,9 +218,10 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       container.style.display = "block";
       container.style.minWidth = "1280px"; // fallback safeguard
       container.style.width = `${svgWidth}px`; // lock width to layout
-      container.style.marginTop = "2rem"; // ✅ space below dropdown
-      
+      container.style.marginTop = "2rem";
+      container.style.position = "relative"; // needed for absolute controls
 
+      // SVG innerHTML
       container.innerHTML = `
   <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
     <style>
@@ -263,25 +265,93 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
   </svg>
 `;
 
-
+      // --- D3 Zoom Setup ---
       const svgEl = container.querySelector("svg");
       const zoomGroup = container.querySelector("#zoom-group");
-
       const d3svg = d3.select(svgEl);
       const d3g = d3.select(zoomGroup);
 
+      // Track transform for buttons
+      let currentTransform = d3.zoomIdentity;
+
+      // Setup D3 zoom behavior (only on pinch/ctrl+scroll, not normal wheel)
       const zoom = d3.zoom()
         .scaleExtent([0.3, 4])
+        .filter(function (event) {
+          // Allow zoom for pinch (event.ctrlKey) or cmd (event.metaKey), not plain wheel (native scroll)
+          return event.type === "wheel"
+            ? event.ctrlKey || event.metaKey
+            : true;
+        })
         .on("zoom", (event) => {
           d3g.attr("transform", event.transform);
+          currentTransform = event.transform;
         });
 
       d3svg.call(zoom);
+
+      // --- Zoom Controls UI ---
+      // Controls: plus/minus buttons
+      const controls = document.createElement("div");
+      controls.style.position = "absolute";
+      controls.style.top = "16px";
+      controls.style.right = "32px";
+      controls.style.display = "flex";
+      controls.style.gap = "12px";
+      controls.style.zIndex = "10";
+      // Button styling to match site
+      const buttonStyle = `
+        background-color: #588B8B;
+        color: #fff;
+        font-size: 1.5rem;
+        border: none;
+        border-radius: 9999px;
+        box-shadow: 0 2px 8px rgba(88,139,139,0.15);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s;
+      `;
+
+      // Minus
+      const minusBtn = document.createElement("button");
+      minusBtn.innerHTML = '<span aria-label="Zoom Out" title="Zoom Out" style="font-size:2rem;">&#8722;</span>';
+      minusBtn.style = buttonStyle + "margin-right:2px;";
+
+      // Plus
+      const plusBtn = document.createElement("button");
+      plusBtn.innerHTML = '<span aria-label="Zoom In" title="Zoom In" style="font-size:2rem;">&#43;</span>';
+      plusBtn.style = buttonStyle + "margin-left:2px;";
+
+      // Add to controls
+      controls.appendChild(minusBtn);
+      controls.appendChild(plusBtn);
+      container.appendChild(controls);
+
+      // Helper: smooth zoom
+      function smoothZoom(factor) {
+        let newScale = Math.max(0.3, Math.min(4, currentTransform.k * factor));
+        let newTransform = d3.zoomIdentity
+          .translate(currentTransform.x, currentTransform.y)
+          .scale(newScale);
+
+        d3svg
+          .transition()
+          .duration(250)
+          .call(zoom.transform, newTransform);
+      }
+
+      minusBtn.onclick = () => smoothZoom(1 / 1.2);
+      plusBtn.onclick = () => smoothZoom(1.2);
 
       return container;
     }
   )
 }
+
 
 function _fullData() {
   return fetch("commentaries_observable_nested.json")
