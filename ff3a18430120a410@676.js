@@ -200,7 +200,7 @@ function _2(renderChart, data) {
 
 function _3(md) { return (md`## Code`) } 
 
-function _renderChart(color, constructTangleLayout, _, svg, background_color) {
+function _renderChart(color, constructTangleLayout, _, svg, background_color, d3) {
   return (
     (data, options = {}) => {
       options.color ||= (d, i) => color(i);
@@ -506,7 +506,7 @@ export default function define(runtime, observer) {
   main.variable(observer("title")).define(["md"], _1);
   main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
-  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color"], _renderChart);
+  main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color", "d3"], _renderChart);
   main.value("renderChart").then(fn => window.renderChart = fn);
   main.variable(observer("fullData")).define("fullData", _fullData);
   main.variable(observer("data")).define("data", ["fullData"], _data);
