@@ -212,7 +212,6 @@ function _dropdown(fullData, defaultLayers) {
 }
 
 
-
 function _2(renderChart, data) {
   return (
     renderChart(data)
