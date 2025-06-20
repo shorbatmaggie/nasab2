@@ -52,7 +52,7 @@ function extractLineageLayers(selectedId, flatData) {
   ];
 }
 
-function _dropdown(fullData) {
+function _dropdown(fullData, defaultLayers) {
   const flat = fullData;
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
 
@@ -102,12 +102,14 @@ function _dropdown(fullData) {
           None found.
         </div>
       `;
+      window.currentVis = "none";
     } else {
       window.setFilteredData(layers);
+      window.currentVis = "lineage";
     }
   };
 
-  // --- Reset button (clears selection)
+  // --- Reset button
   const resetBtn = document.createElement("button");
   resetBtn.textContent = "Reset";
   resetBtn.className = "mt-2 px-4 py-2 rounded shadow";
@@ -116,7 +118,8 @@ function _dropdown(fullData) {
 
   resetBtn.onclick = () => {
     select.value = "";
-    document.getElementById("chart-area").innerHTML = "";
+    window.setFilteredData(window.defaultLayersCache); // <-- see next step!
+    window.currentVis = "default";
   };
 
   section.append(title, label, select, resetBtn);
@@ -130,6 +133,7 @@ function _dropdown(fullData) {
 
   return outer;
 }
+
 
 function _2(renderChart, data) {
   return (
@@ -354,6 +358,11 @@ function _fullData() {
     });
 }
 
+function _defaultLayers() {
+  return fetch("commentaries_observable_nested.json")
+    .then(res => res.json());
+}
+
 function _data(fullData) { return fullData }
 
 
@@ -570,22 +579,33 @@ export default function define(runtime, observer) {
   const main = runtime.module();
 
   main.variable(observer("title")).define(["md"], _1);
-  main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
   main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color", "d3"], _renderChart);
   main.value("renderChart").then(fn => window.renderChart = fn);
+
   main.variable(observer("fullData")).define("fullData", _fullData);
-  main.variable(observer("data")).define("data", ["fullData"], _data);
+  main.variable(observer("defaultLayers")).define("defaultLayers", _defaultLayers);
+
+  // Only one dropdown registration, with both datasets!
+  main.variable(observer()).define(["fullData", "defaultLayers"], _dropdown);
+
   main.variable(observer("constructTangleLayout")).define("constructTangleLayout", ["d3"], _constructTangleLayout);
   main.variable(observer("color")).define("color", ["d3"], _color);
   main.variable(observer("background_color")).define("background_color", _background_color);
-  main.variable(observer()).define(["fullData"], _dropdown);
   main.variable(observer("depsHeader")).define(["md"], _9);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("_")).define("_", ["require"], __);
 
+  // Show the default tree on load, and allow reset to show it again
+  main.value("defaultLayers").then(layers => {
+    window.defaultLayersCache = layers;
+    window.setFilteredData(layers);
+    window.currentVis = "default";
+  });
+
   return main;
 }
+
 
 window.setFilteredData = function (newData) {
   const chartArea = document.querySelector("#chart-area");
@@ -593,3 +613,4 @@ window.setFilteredData = function (newData) {
   const chart = window.renderChart(newData);
   document.querySelector("#chart-area")?.appendChild(chart);
 };
+
