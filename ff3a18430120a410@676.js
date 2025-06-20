@@ -318,19 +318,19 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       // No border SVG, only simple icon centered
       const minusBtn = document.createElement("button");
       minusBtn.innerHTML = `
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="9" cy="9" r="9" fill="#588B8B"/>
-    <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
-  </svg>`;
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="9" cy="9" r="9" fill="#588B8B"/>
+        <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
+      </svg>`;
       minusBtn.style = buttonStyle;
 
       const plusBtn = document.createElement("button");
       plusBtn.innerHTML = `
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="9" cy="9" r="9" fill="#588B8B"/>
-    <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
-    <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff"/>
-  </svg>`;
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="9" cy="9" r="9" fill="#588B8B"/>
+        <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
+        <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff"/>
+      </svg>`;
       plusBtn.style = buttonStyle;
 
       controls.appendChild(minusBtn);
@@ -377,6 +377,52 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
         zoomAtPoint(1.2);
       };
 
+      const fitBtn = document.createElement("button");
+      fitBtn.innerHTML = `
+  <svg width="18" height="18" viewBox="0 0 18 18" style="display:block;margin:auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="9" cy="9" r="9" fill="#588B8B"/>
+    <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
+    <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff"/>
+    <rect x="6" y="6" width="6" height="6" rx="1.2" fill="#fff"/>
+  </svg>`;
+      fitBtn.style = buttonStyle;
+      fitBtn.title = "Fit to Screen";
+
+      controls.appendChild(fitBtn);
+
+      fitBtn.onclick = (e) => {
+        e.preventDefault();
+
+        // Get the bounding box of the network in SVG coordinates
+        const bbox = zoomGroup.getBBox();
+        const padding = 32; // px, extra space around the edges
+
+        // Compute scale needed to fit both width and height in container
+        const scaleX = (container.clientWidth - padding * 2) / bbox.width;
+        const scaleY = (container.clientHeight - padding * 2) / bbox.height;
+        const scale = Math.min(scaleX, scaleY, 4); // 4 is still max zoom
+
+        // Center coordinates for the bbox in SVG space
+        const centerSVG = [
+          bbox.x + bbox.width / 2,
+          bbox.y + bbox.height / 2
+        ];
+
+        // Center of the container in screen space
+        const centerContainer = [
+          container.clientWidth / 2,
+          container.clientHeight / 2
+        ];
+
+        // Build transform: scale, then move network center to container center
+        let transform = d3.zoomIdentity
+          .translate(centerContainer[0], centerContainer[1])
+          .scale(scale)
+          .translate(-centerSVG[0], -centerSVG[1]);
+
+        d3svg.transition().duration(350).call(zoom.transform, transform);
+      };
+      
 
 
       return container;
