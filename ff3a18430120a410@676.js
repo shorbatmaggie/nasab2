@@ -379,13 +379,14 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
 
       const resetBtn = document.createElement("button");
       resetBtn.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 18 18" style="display:block;margin:auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="9" cy="9" r="9" fill="#588B8B"/>
-        <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
-        <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff" transform="rotate(45 9 9)"/>
-        <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff" transform="rotate(-45 9 9)"/>
-      </svg>
-    `;
+        <svg width="18" height="18" viewBox="0 0 18 18" style="display:block;margin:auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="9" r="9" fill="#588B8B"/>
+          <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff" transform="rotate(45 9 9)"/>
+          <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff" transform="rotate(-45 9 9)"/>
+        </svg>
+      `;
+
+    
 
       resetBtn.style = buttonStyle;
       resetBtn.title = "Reset zoom";
