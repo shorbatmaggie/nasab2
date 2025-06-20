@@ -359,7 +359,8 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
           .scale(newK);
 
         // Figure out where the same SVG-point would now map to
-        let newScreenPoint = newTransform(svgPoint);
+        let newScreenPoint = newTransform.apply(svgPoint);
+
 
         // Adjust translation so the SVG-point remains under the same screen center
         newTransform = newTransform.translate(cx - newScreenPoint[0], cy - newScreenPoint[1]);
