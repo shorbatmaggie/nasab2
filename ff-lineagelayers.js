@@ -2,152 +2,59 @@ function _1(md) {
   return md`# Nasab2`;
 }
 
-function extractAncestry(targetId, fullData) {
-  const flat = fullData.flat();
-  const lookup = Object.fromEntries(flat.map(n => [n.id, n]));
-  const visited = new Set();
-  const queue = [targetId];
+function extractLineageLayers(selectedId, flatData) {
+  const nodeById = Object.fromEntries(flatData.map(n => [n.id, n]));
 
-  while (queue.length > 0) {
-    const current = queue.pop();
-    if (!visited.has(current)) {
-      visited.add(current);
-      const parents = lookup[current]?.parents || [];
-      for (const p of parents) queue.push(p);
-    }
-  }
-
-  const ancestors = flat.filter(n => visited.has(n.id));
-  ancestors.push(lookup[targetId]);
-
-  const genMap = new Map();
-  const assignLevel = (node, level = 0) => {
-    if (genMap.has(node.id)) return;
-    genMap.set(node.id, level);
-    for (const p of node.parents || []) assignLevel(lookup[p], level - 1);
-  };
-
-  assignLevel(lookup[targetId], 0);
-
-  const grouped = [];
-  for (const [id, level] of genMap.entries()) {
-    const node = lookup[id];
-    const gen = grouped[-level] || (grouped[-level] = []);
-    gen.push(node);
-  }
-
-  return grouped.reverse();
-
-}
-
-function extractDescendants(targetId, fullData) {
-  const flat = fullData.flat();
-  const lookup = Object.fromEntries(flat.map(n => [n.id, n]));
-  const childrenMap = new Map();
-
-  for (const node of flat) {
-    for (const parent of node.parents || []) {
-      if (!childrenMap.has(parent)) childrenMap.set(parent, []);
-      childrenMap.get(parent).push(node.id);
-    }
-  }
-
-  const visited = new Set();
-  const queue = [targetId];
-
-  while (queue.length > 0) {
-    const current = queue.pop();
-    if (!visited.has(current)) {
-      visited.add(current);
-      const children = childrenMap.get(current) || [];
-      for (const child of children) {
-        queue.push(child);
+  // --- Ancestors
+  let ancestorLayers = [];
+  let visitedA = new Set([selectedId]);
+  let current = [selectedId];
+  while (true) {
+    let next = [];
+    for (let id of current) {
+      let node = nodeById[id];
+      if (node && node.parents && node.parents.length) {
+        for (let pid of node.parents) {
+          if (!visitedA.has(pid)) {
+            next.push(pid);
+            visitedA.add(pid);
+          }
+        }
       }
     }
+    if (!next.length) break;
+    ancestorLayers.unshift(next.map(id => nodeById[id]).filter(Boolean));
+    current = next;
   }
 
-  const descendants = flat.filter(n => visited.has(n.id));
-  const genMap = new Map();
-
-  const assignLevel = (node, level = 0) => {
-    if (genMap.has(node.id)) return;
-    genMap.set(node.id, level);
-    for (const child of childrenMap.get(node.id) || []) {
-      assignLevel(lookup[child], level + 1);
+  // --- Descendants
+  let descendantLayers = [];
+  let visitedD = new Set([selectedId]);
+  current = [selectedId];
+  while (true) {
+    let next = [];
+    for (let node of flatData) {
+      if ((node.parents || []).some(pid => current.includes(pid)) && !visitedD.has(node.id)) {
+        next.push(node.id);
+        visitedD.add(node.id);
+      }
     }
-  };
-
-  assignLevel(lookup[targetId], 0);
-
-  const grouped = [];
-  for (const [id, level] of genMap.entries()) {
-    const node = lookup[id];
-    const gen = grouped[level] || (grouped[level] = []);
-    gen.push(node);
+    if (!next.length) break;
+    descendantLayers.push(next.map(id => nodeById[id]).filter(Boolean));
+    current = next;
   }
 
-  // ✅ Sanity patch: remove references to parents not included in this subgraph
-  const validIDs = new Set(descendants.map(n => n.id));
-  for (const level of grouped) {
-    for (const node of level) {
-      node.parents = (node.parents || []).filter(p => validIDs.has(p));
-    }
-  }
-
-  return grouped;
+  // Combine: [ancestors..., [selected], descendants...]
+  return [
+    ...ancestorLayers,
+    [nodeById[selectedId]],
+    ...descendantLayers
+  ];
 }
 
 function _dropdown(fullData) {
-  const flat = fullData.flat();
+  const flat = fullData;
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
-
-  const createDropdown = (labelText, onChangeFn, id) => {
-    const label = document.createElement("label");
-    label.setAttribute("for", id);
-    label.className = "block font-semibold mb-1";
-    label.textContent = labelText;
-
-    const select = document.createElement("select");
-    select.id = id;
-    select.className = "w-full mb-4 p-2 border border-gray-300 rounded";
-    select.style.backgroundColor = "#F5F5F5";
-
-    // Add blank option
-    const blank = document.createElement("option");
-    blank.value = "";
-    blank.textContent = " Select a Text";
-    select.appendChild(blank);
-
-    // Add options
-    for (const node of sorted) {
-      const option = document.createElement("option");
-      option.value = node.id;
-      option.textContent = `${node.label} (${node.author}, d. ${node.death} AH)`;
-      select.appendChild(option);
-    }
-
-    // OnChange logic
-    select.onchange = ((label, handler) => () => {
-      const selectedID = select.value;
-      if (!selectedID) return;
-
-      const subgraph = handler(selectedID, fullData);
-
-      // Check for orphan (1 node, 1 level)
-      if (subgraph.length === 1 && subgraph[0].length === 1) {
-        document.getElementById("chart-area").innerHTML = `
-          <div class="text-center text-gray-500 italic py-8">
-            None found.
-          </div>
-        `;
-      } else {
-        window.setFilteredData(subgraph);
-      }
-    })(labelText, onChangeFn);
-    
-
-    return [label, select];
-  };
 
   // === DOM STRUCTURE ===
 
@@ -156,30 +63,63 @@ function _dropdown(fullData) {
 
   const title = document.createElement("h2");
   title.className = "text-xl font-bold mb-2";
-  title.textContent = "Explore a Genealogy";
+  title.textContent = "Explore a Lineage";
 
-  const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select");
-  const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select");
+  // --- Create dropdown
+  const label = document.createElement("label");
+  label.setAttribute("for", "lineage-select");
+  label.className = "block font-semibold mb-1";
+  label.textContent = "View Full Lineage:";
 
+  const select = document.createElement("select");
+  select.id = "lineage-select";
+  select.className = "w-full mb-4 p-2 border border-gray-300 rounded";
+  select.style.backgroundColor = "#F5F5F5";
+
+  // Add blank option
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = " Select a Text";
+  select.appendChild(blank);
+
+  // Add options
+  for (const node of sorted) {
+    const option = document.createElement("option");
+    option.value = node.id;
+    option.textContent = `${node.label} (${node.author}, d. ${node.death} AH)`;
+    select.appendChild(option);
+  }
+
+  // OnChange logic
+  select.onchange = () => {
+    const selectedID = select.value;
+    if (!selectedID) return;
+    const layers = extractLineageLayers(selectedID, flat);
+    // If just the selected node, display "None found"
+    if (layers.length === 1 && layers[0].length === 1) {
+      document.getElementById("chart-area").innerHTML = `
+        <div class="text-center text-gray-500 italic py-8">
+          None found.
+        </div>
+      `;
+    } else {
+      window.setFilteredData(layers);
+    }
+  };
+
+  // --- Reset button (clears selection)
   const resetBtn = document.createElement("button");
-  resetBtn.textContent = "Reset to Full Tree";
+  resetBtn.textContent = "Reset";
   resetBtn.className = "mt-2 px-4 py-2 rounded shadow";
   resetBtn.style.backgroundColor = "#588B8B";
   resetBtn.style.color = "white";
 
   resetBtn.onclick = () => {
-    window.setFilteredData(fullData);
-
-    // Reset dropdowns
-    const ancestrySelect = document.getElementById("ancestry-select");
-    const descendantSelect = document.getElementById("descendant-select");
-
-    if (ancestrySelect) ancestrySelect.value = "";
-    if (descendantSelect) descendantSelect.value = "";
+    select.value = "";
+    document.getElementById("chart-area").innerHTML = "";
   };
-  
 
-  section.append(title, ancestryLabel, ancestrySelect, descendantLabel, descendantSelect, resetBtn);
+  section.append(title, label, select, resetBtn);
 
   const outer = document.createElement("div");
   outer.className = "max-w-7xl mx-auto";
@@ -190,7 +130,6 @@ function _dropdown(fullData) {
 
   return outer;
 }
-
 
 function _2(renderChart, data) {
   return (
@@ -408,7 +347,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
 
 
 function _fullData() {
-  return fetch("commentaries_observable_nested.json")
+  return fetch("commentaries_observable_formatted.json")
     .then(res => {
       if (!res.ok) throw new Error(`Failed to load JSON: ${res.status}`);
       return res.json();
@@ -416,6 +355,9 @@ function _fullData() {
 }
 
 function _data(fullData) { return fullData }
+
+
+
 
 
 function _constructTangleLayout(d3){return(
