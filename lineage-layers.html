@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Nasab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Naskh+Arabic&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="inspector.css" />
+
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #F5F5F5;
+        }
+
+        .arabic {
+            font-family: 'Noto Naskh Arabic', serif;
+        }
+
+        body.dyslexic-mode {
+            font-family: 'OpenDyslexic', sans-serif;
+        }
+
+        header {
+            background-color: #588B8B;
+            color: white;
+        }
+
+        button {
+            background-color: #588B8B !important;
+            color: white !important;
+        }
+
+        section {
+            background-color: #FFFFFF !important;
+            color: #588B8B;
+        }
+
+        input,
+        select {
+            background-color: #F5F5F5 !important;
+        }
+
+        nav a,
+        nav label {
+            color: #F0A7AD !important;
+        }
+    </style>
+</head>
+
+<body class="p-6 font-sans">
+
+    <!-- Header -->
+    <header class="p-6 rounded shadow">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="text-4xl font-bold tracking-wide">Nasab</h1>
+            <p class="mt-1 text-lg not-italic">A Genealogy Visualization Tool for Shāfiʿī Commentaries
+            </p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="max-w-7xl mx-auto mt-4 mb-8 flex gap-4 text-lg font-semibold">
+        <a href="../kan-zaman/index.html" class="underline">Kan Zaman</a>
+        <a href="nasab2.html" class="underline">Full Tree</a>
+        <a href="lineage-layers.html" class="underline">Lineage Layers</a>
+        <label>
+            <input type="checkbox" id="dyslexia-toggle" />
+            Dyslexia-Friendly Font
+        </label>
+    </nav>
+
+
+    <!-- Main Chart Area -->
+    <main id="chart-area" class="max-w-7xl mx-auto"></main>
+
+
+
+    <!-- Observable Runtime -->
+    <script type="module">
+        import define from "./ff-lineagelayers.js";        ;
+        import { Runtime, Inspector } from "./runtime.js";
+
+        const runtime = new Runtime();
+        const main = runtime.module(define, name => {
+            if (name === undefined) return new Inspector(document.querySelector("#chart-area"));
+        });
+
+        // Dyslexia font toggle
+        document.getElementById("dyslexia-toggle").addEventListener("change", function () {
+            document.body.classList.toggle("dyslexic-mode", this.checked);
+        });
+    </script>
+
+</body>
+
+</html>
