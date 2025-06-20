@@ -338,14 +338,44 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       container.appendChild(controls);
 
       // Reliable button zoom logic: just call zoom.scaleBy
+      function zoomAtPoint(factor) {
+        // Get center of visible viewport in SVG coordinates
+        const containerRect = container.getBoundingClientRect();
+        const svgRect = svgEl.getBoundingClientRect();
+        const scrollLeft = container.scrollLeft;
+        const scrollTop = container.scrollTop;
+        const cx = scrollLeft + container.clientWidth / 2;
+        const cy = scrollTop + container.clientHeight / 2;
+
+        // Convert screen point to SVG coordinates using the current transform
+        const pt = [cx, cy];
+        let transform = d3.zoomTransform(svgEl);
+        let svgPoint = transform.invert(pt);
+
+        // Build new transform, scaling at the SVG-point under the center of the viewport
+        let newK = Math.max(0.3, Math.min(4, transform.k * factor));
+        let newTransform = d3.zoomIdentity
+          .translate(transform.x, transform.y)
+          .scale(newK);
+
+        // Figure out where the same SVG-point would now map to
+        let newScreenPoint = newTransform(svgPoint);
+
+        // Adjust translation so the SVG-point remains under the same screen center
+        newTransform = newTransform.translate(cx - newScreenPoint[0], cy - newScreenPoint[1]);
+
+        d3svg.transition().duration(300).call(zoom.transform, newTransform);
+      }
+
       minusBtn.onclick = (e) => {
         e.preventDefault();
-        d3svg.transition().duration(200).call(zoom.scaleBy, 1 / 1.2);
+        zoomAtPoint(1 / 1.2);
       };
       plusBtn.onclick = (e) => {
         e.preventDefault();
-        d3svg.transition().duration(200).call(zoom.scaleBy, 1.2);
+        zoomAtPoint(1.2);
       };
+
 
 
       return container;
