@@ -291,79 +291,62 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       // --- Zoom Controls UI ---
       const controls = document.createElement("div");
       controls.style.position = "absolute";
-      controls.style.top = "18px";
+      controls.style.top = "20px";
       controls.style.right = "32px";
       controls.style.display = "flex";
-      controls.style.gap = "12px";
+      controls.style.gap = "8px";
       controls.style.zIndex = "10";
-      controls.style.pointerEvents = "none"; // don't block container
-      const buttonStyle = `
-        background-color: #588B8B;
-        color: #fff;
-        font-size: 1.7rem;
-        border: none;
-        border-radius: 50%;
-        box-shadow: 0 1px 6px rgba(88,139,139,0.09);
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        pointer-events: auto;
-        margin: 0 2px;
-      `;
+      controls.style.pointerEvents = "none"; // allows events through except to children
 
-      // SVG Minus Icon (thin border)
+      const buttonStyle = `
+  background-color: #588B8B;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.25rem;
+  box-shadow: 0 1px 6px rgba(88,139,139,0.09);
+  pointer-events: auto; /* ensures child buttons receive clicks */
+  padding: 0;
+`;
+
+      // No border SVG, only simple icon centered
       const minusBtn = document.createElement("button");
       minusBtn.innerHTML = `
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="14" cy="14" r="13" fill="#588B8B" stroke="#F5F5F5" stroke-width="1"/>
-          <rect x="8" y="13" width="12" height="2" rx="1" fill="#fff"/>
-        </svg>`;
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="9" cy="9" r="9" fill="#588B8B"/>
+    <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
+  </svg>`;
       minusBtn.style = buttonStyle;
 
-      // SVG Plus Icon (thin border)
       const plusBtn = document.createElement("button");
       plusBtn.innerHTML = `
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="14" cy="14" r="13" fill="#588B8B" stroke="#F5F5F5" stroke-width="1"/>
-          <rect x="8" y="13" width="12" height="2" rx="1" fill="#fff"/>
-          <rect x="13" y="8" width="2" height="12" rx="1" fill="#fff"/>
-        </svg>`;
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="9" cy="9" r="9" fill="#588B8B"/>
+    <rect x="4.5" y="8.25" width="9" height="1.5" rx="0.75" fill="#fff"/>
+    <rect x="8.25" y="4.5" width="1.5" height="9" rx="0.75" fill="#fff"/>
+  </svg>`;
       plusBtn.style = buttonStyle;
 
       controls.appendChild(minusBtn);
       controls.appendChild(plusBtn);
       container.appendChild(controls);
 
-      // --- Working Button Zoom Logic ---
-      function zoomBy(factor) {
-        // Clamp new scale
-        const min = 0.3, max = 4;
-        let newScale = Math.max(min, Math.min(max, currentTransform.k * factor));
-        // Keep center point of current viewport (middle of container)
-        const containerRect = container.getBoundingClientRect();
-        const cx = container.scrollLeft + container.clientWidth / 2;
-        const cy = container.clientHeight / 2;
-        // The point under the center before zoom
-        let point = currentTransform.invert([cx, cy]);
-        // New transform, scaled at center
-        let newTransform = d3.zoomIdentity
-          .translate(currentTransform.x, currentTransform.y)
-          .scale(newScale);
-        let newPoint = newTransform(point);
-        // Adjust translation so center stays centered
-        newTransform = newTransform.translate(cx - newPoint[0], cy - newPoint[1]);
+      // Reliable button zoom logic: just call zoom.scaleBy
+      minusBtn.onclick = (e) => {
+        e.preventDefault();
+        d3svg.transition().duration(200).call(zoom.scaleBy, 1 / 1.2);
+      };
+      plusBtn.onclick = (e) => {
+        e.preventDefault();
+        d3svg.transition().duration(200).call(zoom.scaleBy, 1.2);
+      };
 
-        d3svg
-          .transition()
-          .duration(300)
-          .call(zoom.transform, newTransform);
-      }
-
-      minusBtn.onclick = (e) => { e.preventDefault(); zoomBy(1 / 1.2); };
-      plusBtn.onclick = (e) => { e.preventDefault(); zoomBy(1.2); };
 
       return container;
     }
