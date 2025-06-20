@@ -275,7 +275,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
 
       // Setup D3 zoom behavior (only on pinch/ctrl+scroll, not normal wheel)
       const zoom = d3.zoom()
-        .scaleExtent([0.1, 4])
+        .scaleExtent([0.05, 4])
         .filter(function (event) {
           return event.type === "wheel"
             ? event.ctrlKey || event.metaKey
