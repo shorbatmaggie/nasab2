@@ -52,9 +52,48 @@ function extractLineageLayers(selectedId, flatData) {
   ];
 }
 
+function mergeLineageLayers(listOfLayerArrays) {
+  // 1. Pad all so their "selected node" is at the same central index
+  let preDepths = listOfLayerArrays.map(layers => layers.findIndex(arr => arr.length && arr[0].id));
+  let maxPre = Math.max(...preDepths);
+  let postDepths = listOfLayerArrays.map(layers => layers.length - 1 - preDepths[listOfLayerArrays.indexOf(layers)]);
+  let maxPost = Math.max(...postDepths);
+
+  let normalized = listOfLayerArrays.map((layers, i) => {
+    let pre = maxPre - preDepths[i];
+    let post = maxPost - postDepths[i];
+    return [
+      ...Array(pre).fill([]),
+      ...layers,
+      ...Array(post).fill([])
+    ];
+  });
+
+  // 2. Merge by index, dedupe nodes by id
+  let merged = [];
+  let numLayers = normalized[0]?.length || 0;
+  for (let i = 0; i < numLayers; ++i) {
+    let allNodes = [];
+    for (let lineage of normalized) {
+      allNodes = allNodes.concat(lineage[i] || []);
+    }
+    // Deduplicate by id
+    let seen = new Set();
+    merged.push(allNodes.filter(n => {
+      if (!n) return false;
+      if (seen.has(n.id)) return false;
+      seen.add(n.id);
+      return true;
+    }));
+  }
+  return merged;
+}
+
 function _dropdown(fullData, defaultLayers) {
   const flat = fullData;
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
+  let layersList = [];
+  let addedIds = new Set();
 
   // === DOM STRUCTURE ===
 
@@ -63,19 +102,18 @@ function _dropdown(fullData, defaultLayers) {
 
   const title = document.createElement("h2");
   title.className = "text-xl font-bold mb-2";
-  title.textContent = "Explore a Lineage";
+  title.textContent = "Build a Multi-Lineage Visualization";
 
-  // --- Create dropdown
+  // Dropdown
   const label = document.createElement("label");
   label.setAttribute("for", "lineage-select");
   label.className = "block font-semibold mb-1";
-  label.textContent = "View Full Lineage:";
+  label.textContent = "Select Text:";
 
   const select = document.createElement("select");
   select.id = "lineage-select";
   select.className = "w-full mb-4 p-2 border border-gray-300 rounded";
   select.style.backgroundColor = "#F5F5F5";
-
   // Add blank option
   const blank = document.createElement("option");
   blank.value = "";
@@ -90,39 +128,78 @@ function _dropdown(fullData, defaultLayers) {
     select.appendChild(option);
   }
 
-  // OnChange logic
-  select.onchange = () => {
-    const selectedID = select.value;
-    if (!selectedID) return;
-    const layers = extractLineageLayers(selectedID, flat);
-    // If just the selected node, display "None found"
-    if (layers.length === 1 && layers[0].length === 1) {
-      document.getElementById("chart-area").innerHTML = `
-        <div class="text-center text-gray-500 italic py-8">
-          None found.
-        </div>
-      `;
-      window.currentVis = "none";
-    } else {
-      window.setFilteredData(layers);
-      window.currentVis = "lineage";
+  // Add Layer button
+  const addBtn = document.createElement("button");
+  addBtn.textContent = "Add Layer";
+  addBtn.className = "ml-2 px-4 py-2 rounded shadow";
+  addBtn.style.backgroundColor = "#588B8B";
+  addBtn.style.color = "white";
+
+  // Added lineages display
+  const addedDiv = document.createElement("div");
+  addedDiv.className = "mt-4 flex flex-wrap gap-2";
+
+  function renderAddedLineages() {
+    addedDiv.innerHTML = "";
+    if (!layersList.length) {
+      addedDiv.innerHTML = `<span class="text-gray-400 italic">No layers added.</span>`;
+      return;
     }
+    layersList.forEach((layers, idx) => {
+      // Get selected node's label for display
+      let focal = layers.find(arr => arr.length && arr.some(n => n)).find(n => n);
+      const badge = document.createElement("span");
+      badge.className = "inline-flex items-center bg-[#588B8B] text-white px-3 py-1 rounded-full text-sm";
+      badge.textContent = focal.label;
+      // Remove X button
+      const x = document.createElement("button");
+      x.textContent = "×";
+      x.className = "ml-2 bg-white text-[#588B8B] rounded-full px-2 py-0.5 border border-[#588B8B] text-xs";
+      x.onclick = () => {
+        // Remove from arrays, re-render
+        addedIds.delete(focal.id);
+        layersList.splice(idx, 1);
+        if (layersList.length) {
+          window.setFilteredData(mergeLineageLayers(layersList));
+        } else {
+          window.setFilteredData(window.defaultLayersCache);
+        }
+        renderAddedLineages();
+      };
+      badge.appendChild(x);
+      addedDiv.appendChild(badge);
+    });
+  }
+
+  addBtn.onclick = e => {
+    e.preventDefault();
+    const selectedID = select.value;
+    if (!selectedID || addedIds.has(selectedID)) return; // Ignore if blank or already added
+    const layers = extractLineageLayers(selectedID, flat);
+    layersList.push(layers);
+    addedIds.add(selectedID);
+    window.setFilteredData(mergeLineageLayers(layersList));
+    renderAddedLineages();
   };
 
   // --- Reset button
   const resetBtn = document.createElement("button");
   resetBtn.textContent = "Reset";
-  resetBtn.className = "mt-2 px-4 py-2 rounded shadow";
+  resetBtn.className = "ml-2 px-4 py-2 rounded shadow";
   resetBtn.style.backgroundColor = "#588B8B";
   resetBtn.style.color = "white";
-
   resetBtn.onclick = () => {
     select.value = "";
-    window.setFilteredData(window.defaultLayersCache); // <-- see next step!
-    window.currentVis = "default";
+    layersList = [];
+    addedIds = new Set();
+    window.setFilteredData(window.defaultLayersCache);
+    renderAddedLineages();
   };
 
-  section.append(title, label, select, resetBtn);
+  // Initial render
+  renderAddedLineages();
+
+  section.append(title, label, select, addBtn, resetBtn, addedDiv);
 
   const outer = document.createElement("div");
   outer.className = "max-w-7xl mx-auto";
@@ -133,6 +210,7 @@ function _dropdown(fullData, defaultLayers) {
 
   return outer;
 }
+
 
 
 function _2(renderChart, data) {
