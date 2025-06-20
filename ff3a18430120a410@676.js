@@ -379,10 +379,10 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
 
       const resetBtn = document.createElement("button");
       resetBtn.innerHTML = `
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="display:block;margin:auto;" xmlns="http://www.w3.org/2000/svg">
+      <svg width="18" height="18" viewBox="0 0 18 18" style="display:block;margin:auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="9" cy="9" r="9" fill="#588B8B"/>
-        <path d="M12.5 12c-1.2 1.2-4.3 1.1-5.2-1.1M7.3 10.9L6 12.2M7.3 10.9V13M7.3 10.9h2.1" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13 6A5 5 0 0 0 6 5.7" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <line x1="6" y1="6" x2="12" y2="12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <line x1="12" y1="6" x2="6" y2="12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
       </svg>
     `;
 
