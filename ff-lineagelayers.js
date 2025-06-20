@@ -92,7 +92,7 @@ function mergeLineageLayers(listOfLayerArrays) {
 function _dropdown(fullData, defaultLayers) {
   const flat = fullData;
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
-  let layersList = [];
+  let layersList = []; // [{id, label, layers}]
   let addedIds = new Set();
 
   // === DOM STRUCTURE ===
@@ -145,22 +145,20 @@ function _dropdown(fullData, defaultLayers) {
       addedDiv.innerHTML = `<span class="text-gray-400 italic">No layers added.</span>`;
       return;
     }
-    layersList.forEach((layers, idx) => {
-      // Get selected node's label for display
-      let focal = layers.find(arr => arr.length && arr.some(n => n)).find(n => n);
+    layersList.forEach((obj, idx) => {
       const badge = document.createElement("span");
       badge.className = "inline-flex items-center bg-[#588B8B] text-white px-3 py-1 rounded-full text-sm";
-      badge.textContent = focal.label;
+      badge.textContent = obj.label; // Always the selected node's label
       // Remove X button
       const x = document.createElement("button");
       x.textContent = "×";
       x.className = "ml-2 bg-white text-[#588B8B] rounded-full px-2 py-0.5 border border-[#588B8B] text-xs";
       x.onclick = () => {
-        // Remove from arrays, re-render
-        addedIds.delete(focal.id);
+        addedIds.delete(obj.id);
         layersList.splice(idx, 1);
         if (layersList.length) {
-          window.setFilteredData(mergeLineageLayers(layersList));
+          const mergedLayers = mergeLineageLayers(layersList.map(x => x.layers)).filter(arr => arr.length > 0);
+          window.setFilteredData(mergedLayers);
         } else {
           window.setFilteredData(window.defaultLayersCache);
         }
@@ -174,11 +172,13 @@ function _dropdown(fullData, defaultLayers) {
   addBtn.onclick = e => {
     e.preventDefault();
     const selectedID = select.value;
-    if (!selectedID || addedIds.has(selectedID)) return; // Ignore if blank or already added
+    if (!selectedID || addedIds.has(selectedID)) return;
     const layers = extractLineageLayers(selectedID, flat);
-    layersList.push(layers);
+    const node = flat.find(n => n.id === selectedID); // <<== Get label *now*
+    layersList.push({ id: selectedID, label: node.label, layers });
     addedIds.add(selectedID);
-    window.setFilteredData(mergeLineageLayers(layersList));
+    const mergedLayers = mergeLineageLayers(layersList.map(x => x.layers)).filter(arr => arr.length > 0);
+    window.setFilteredData(mergedLayers);
     renderAddedLineages();
   };
 
