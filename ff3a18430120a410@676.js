@@ -271,14 +271,12 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       const d3svg = d3.select(svgEl);
       const d3g = d3.select(zoomGroup);
 
-      // Track transform for buttons
       let currentTransform = d3.zoomIdentity;
 
       // Setup D3 zoom behavior (only on pinch/ctrl+scroll, not normal wheel)
       const zoom = d3.zoom()
         .scaleExtent([0.3, 4])
         .filter(function (event) {
-          // Allow zoom for pinch (event.ctrlKey) or cmd (event.metaKey), not plain wheel (native scroll)
           return event.type === "wheel"
             ? event.ctrlKey || event.metaKey
             : true;
@@ -291,7 +289,6 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       d3svg.call(zoom);
 
       // --- Zoom Controls UI ---
-      // Controls: plus/minus buttons
       const controls = document.createElement("div");
       controls.style.position = "absolute";
       controls.style.top = "16px";
@@ -299,48 +296,72 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       controls.style.display = "flex";
       controls.style.gap = "12px";
       controls.style.zIndex = "10";
+      controls.style.pointerEvents = "none"; // ensure controls don't block SVG scroll
       // Button styling to match site
       const buttonStyle = `
         background-color: #588B8B;
         color: #fff;
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         border: none;
         border-radius: 9999px;
-        box-shadow: 0 2px 8px rgba(88,139,139,0.15);
-        width: 40px;
-        height: 40px;
+        box-shadow: 0 2px 8px rgba(88,139,139,0.10);
+        width: 60px;
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: background 0.2s;
+        margin: 0 2px;
+        pointer-events: auto;
       `;
 
-      // Minus
+      // SVG Minus Icon
       const minusBtn = document.createElement("button");
-      minusBtn.innerHTML = '<span aria-label="Zoom Out" title="Zoom Out" style="font-size:2rem;">&#8722;</span>';
-      minusBtn.style = buttonStyle + "margin-right:2px;";
+      minusBtn.innerHTML = `
+        <svg width="28" height="28" viewBox="0 0 28 28" style="display:block;margin:auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" fill="#588B8B" stroke="#F5F5F5" stroke-width="2"/>
+          <rect x="8" y="13" width="12" height="2" rx="1" fill="#fff"/>
+        </svg>`;
+      minusBtn.style = buttonStyle;
 
-      // Plus
+      // SVG Plus Icon
       const plusBtn = document.createElement("button");
-      plusBtn.innerHTML = '<span aria-label="Zoom In" title="Zoom In" style="font-size:2rem;">&#43;</span>';
-      plusBtn.style = buttonStyle + "margin-left:2px;";
+      plusBtn.innerHTML = `
+        <svg width="28" height="28" viewBox="0 0 28 28" style="display:block;margin:auto;" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" fill="#588B8B" stroke="#F5F5F5" stroke-width="2"/>
+          <rect x="8" y="13" width="12" height="2" rx="1" fill="#fff"/>
+          <rect x="13" y="8" width="2" height="12" rx="1" fill="#fff"/>
+        </svg>`;
+      plusBtn.style = buttonStyle;
 
-      // Add to controls
       controls.appendChild(minusBtn);
       controls.appendChild(plusBtn);
       container.appendChild(controls);
 
-      // Helper: smooth zoom
+      // --- Smooth, Centered Zoom Logic ---
       function smoothZoom(factor) {
+        // Calculate new scale (clamped to min/max)
         let newScale = Math.max(0.3, Math.min(4, currentTransform.k * factor));
+        // Calculate the center of the visible area in SVG coordinates
+        const bbox = svgEl.getBoundingClientRect();
+        const scrollLeft = container.scrollLeft;
+        const cx = (scrollLeft + container.clientWidth / 2);
+        const cy = (container.clientHeight / 2);
+
+        // Compute where that maps to in the SVG
+        let center0 = currentTransform.invert([cx, cy]);
         let newTransform = d3.zoomIdentity
           .translate(currentTransform.x, currentTransform.y)
           .scale(newScale);
 
+        let center1 = newTransform([cx, cy]);
+        // Adjust so the zoom is centered on the visible middle
+        newTransform = newTransform.translate(center0[0] - center1[0], center0[1] - center1[1]);
+
         d3svg
           .transition()
-          .duration(250)
+          .duration(350)
           .call(zoom.transform, newTransform);
       }
 
