@@ -101,6 +101,11 @@
     const runtime = new Runtime();
     const main = runtime.module(define, name => {
       if (name === undefined) return new Inspector(document.querySelector("#chart-area"));
+    // After your renderChart function is loaded/ready:
+      if (window.renderChart) {
+        document.querySelector("#chart-area").innerHTML = "";
+        document.querySelector("#chart-area").appendChild(window.renderChart(fullData));
+      }
     });
 
     // Dyslexia font toggle
@@ -113,9 +118,17 @@
           styleEl.textContent = styleEl.textContent.replace(
             /font-family:.*?;/,
             `font-family: ${font};`
-          )
-        })
-      });
+
+          );
+        });
+        // === Now force a redraw with the current dyslexia mode spacing ===
+      if (window.renderChart && window.fullDataForChart) {
+        document.querySelector("#chart-area").innerHTML = "";
+        document.querySelector("#chart-area").appendChild(
+          window.renderChart(window.fullDataForChart)
+      );
+    }
+  });
 
   </script>
 </body>
