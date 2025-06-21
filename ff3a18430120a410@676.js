@@ -179,7 +179,7 @@ function _dropdown(fullData) {
 
 
   const resetBtn = document.createElement("button");
-  resetBtn.textContent = "Reset to Full Tree";
+  resetBtn.textContent = "Reset";
   resetBtn.className = "mt-2 px-4 py-2 rounded shadow";
   resetBtn.style.backgroundColor = "#588B8B";
   resetBtn.style.color = "white";
@@ -210,7 +210,7 @@ function _dropdown(fullData) {
   chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
   // PATCH: return nothing to avoid Observable artifact node
-  return " ";
+  return ;
 
 }
 
