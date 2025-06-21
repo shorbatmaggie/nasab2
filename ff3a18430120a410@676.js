@@ -212,13 +212,6 @@ function _dropdown(fullData) {
   return outer;
 }
 
-
-function _2(renderChart, data) {
-  return (
-    renderChart(data)
-  )
-}
-
 function _3(md) { return (md`## Code`) } 
 
 function _renderChart(color, constructTangleLayout, _, svg, background_color, d3) {
@@ -651,7 +644,7 @@ export default function define(runtime, observer) {
   const main = runtime.module();
 
   main.variable(observer("title")).define(["md"], _1);
-  main.variable(observer()).define(["renderChart", "data"], _2);
+  // main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
   main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color", "d3"], _renderChart);
   main.value("renderChart").then(fn => window.renderChart = fn);
@@ -668,7 +661,7 @@ export default function define(runtime, observer) {
   return main;
 }
 
-// window.setFilteredData = function (newData) {
+window.setFilteredData = function (newData) {
   const chartArea = document.querySelector("#chart-area");
   if (chartArea) chartArea.innerHTML = "";
   const chart = window.renderChart(newData);
