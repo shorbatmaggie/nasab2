@@ -210,7 +210,7 @@ function _dropdown(fullData) {
   chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
   // PATCH: return nothing to avoid Observable artifact node
-  return ;
+  return undefined;
 
 }
 
