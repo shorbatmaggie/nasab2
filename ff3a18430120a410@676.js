@@ -97,6 +97,21 @@ function extractDescendants(targetId, fullData) {
   return grouped;
 }
 
+function extractFullLineage(targetId, fullData) {
+  const ancestry = extractAncestry(targetId, fullData);
+  const descendants = extractDescendants(targetId, fullData);
+  const flatAncestry = ancestry.flat();
+  const flatDescendants = descendants.flat();
+  const nodeMap = new Map();
+  flatAncestry.concat(flatDescendants).forEach(n => {
+    if (n && n.id) nodeMap.set(n.id, n);
+  });
+  // Place the selected node in the center layer, group by generation
+  // We'll just return all as a single group for now (or mimic ancestry grouping)
+  return [Array.from(nodeMap.values())];
+}
+
+
 function _dropdown(fullData) {
   const flat = fullData.flat();
   const sorted = [...flat].sort((a, b) => a.id.localeCompare(b.id, "en"));
@@ -160,6 +175,8 @@ function _dropdown(fullData) {
 
   const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select");
   const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select");
+  const [fullLineageLabel, fullLineageSelect] = createDropdown("View Full Lineage:", extractFullLineage, "full-lineage-select");
+
 
   const resetBtn = document.createElement("button");
   resetBtn.textContent = "Reset to Full Tree";
@@ -168,18 +185,22 @@ function _dropdown(fullData) {
   resetBtn.style.color = "white";
 
   resetBtn.onclick = () => {
-    window.setFilteredData(fullData);
+  // Hide the chart
+  const chartArea = document.getElementById("chart-area");
+  if (chartArea) chartArea.innerHTML = "";
 
-    // Reset dropdowns
-    const ancestrySelect = document.getElementById("ancestry-select");
-    const descendantSelect = document.getElementById("descendant-select");
+  // Reset all dropdowns
+  const ancestrySelect = document.getElementById("ancestry-select");
+  const descendantSelect = document.getElementById("descendant-select");
+  const fullLineageSelect = document.getElementById("full-lineage-select");
 
-    if (ancestrySelect) ancestrySelect.value = "";
-    if (descendantSelect) descendantSelect.value = "";
-  };
+  if (ancestrySelect) ancestrySelect.value = "";
+  if (descendantSelect) descendantSelect.value = "";
+  if (fullLineageSelect) fullLineageSelect.value = "";
+};
   
 
-  section.append(title, ancestryLabel, ancestrySelect, descendantLabel, descendantSelect, resetBtn);
+  section.append(title, ancestryLabel, ancestrySelect, descendantLabel, descendantSelect, fullLineageLabel, fullLineageSelect, resetBtn);
 
   const outer = document.createElement("div");
   outer.className = "max-w-7xl mx-auto";
@@ -647,7 +668,7 @@ export default function define(runtime, observer) {
   return main;
 }
 
-window.setFilteredData = function (newData) {
+// window.setFilteredData = function (newData) {
   const chartArea = document.querySelector("#chart-area");
   if (chartArea) chartArea.innerHTML = "";
   const chart = window.renderChart(newData);
