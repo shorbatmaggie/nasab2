@@ -209,7 +209,9 @@ function _dropdown(fullData) {
   const chartContainer = document.querySelector("#chart-area");
   chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
-  return outer;
+  // PATCH: return nothing to avoid Observable artifact node
+  return null;
+
 }
 
 function _3(md) { return (md`## Code`) } 
