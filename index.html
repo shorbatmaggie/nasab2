@@ -113,16 +113,8 @@
           styleEl.textContent = styleEl.textContent.replace(
             /font-family:.*?;/,
             `font-family: ${font};`
-          );
-        });
-        if (window.renderChart) {
-        // Remove and redraw the chart using the Observable module (default data)
-        const chartArea = document.querySelector("#chart-area");
-        if (chartArea) {
-          chartArea.innerHTML = "";
-          chartArea.appendChild(window.renderChart());
-          }
-        }
+          )
+        })
       });
 
   </script>
