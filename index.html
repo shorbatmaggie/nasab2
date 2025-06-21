@@ -105,8 +105,18 @@
 
     // Dyslexia font toggle
     document.getElementById("dyslexia-toggle").addEventListener("change", function () {
-      document.body.classList.toggle("dyslexic-mode", this.checked);
-    });
+        document.body.classList.toggle("dyslexic-mode", this.checked);
+
+        // Update SVG font family
+        const font = this.checked ? "'OpenDyslexic', sans-serif" : "'Noto Sans', sans-serif";
+        document.querySelectorAll("#chart-area svg style").forEach(styleEl => {
+          styleEl.textContent = styleEl.textContent.replace(
+            /font-family:.*?;/,
+            `font-family: ${font};`
+          );
+        });
+      });
+
   </script>
 </body>
 
