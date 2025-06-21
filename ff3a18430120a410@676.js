@@ -130,7 +130,7 @@ function _dropdown(fullData) {
     // Add blank option
     const blank = document.createElement("option");
     blank.value = "";
-    blank.textContent = " Select a Text";
+    blank.textContent = " ";
     select.appendChild(blank);
 
     // Add options
@@ -210,7 +210,7 @@ function _dropdown(fullData) {
   chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
   // PATCH: return nothing to avoid Observable artifact node
-  return null;
+  return " ";
 
 }
 
