@@ -321,7 +321,7 @@ function _constructTangleLayout(d3){return(
   const generationSpacing = 250;
   const bundleClearance = 400;
   const labelPadding = 800; // enough for long Arabic/English titles
-  const baseGenerationSpacing = 425;
+  const baseGenerationSpacing = 430;
   const minContentWidth = 1280;
   
   options.c ||= 16;
