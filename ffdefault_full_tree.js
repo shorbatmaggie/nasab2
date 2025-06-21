@@ -38,6 +38,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
       text {
         font-family: 'Noto Sans', sans-serif;
         font-size: 16px;
+        fill: #588B8B;
       }
       .node { stroke-linecap: round; }
       .link { fill: none; }
