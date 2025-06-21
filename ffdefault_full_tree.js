@@ -14,7 +14,9 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
   return (
     (data, options = {}) => {
       options.color ||= (d, i) => color(i);
-      const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
+      const isDyslexic = document.body.classList.contains('dyslexic-mode');
+      const tangleLayout = constructTangleLayout(_.cloneDeep(data), { ...options, dyslexicMode: isDyslexic });
+
 
       const svgWidth = tangleLayout.layout.width;
       const svgHeight = tangleLayout.layout.height;
@@ -317,9 +319,9 @@ function _constructTangleLayout(d3){return(
   const metro_d = 4;
   const min_family_height = 22;
   const generationSpacing = 250;
-  const bundleClearance = 450;
+  const bundleClearance = options.dyslexicMode ? 450 : 300;
   const labelPadding = 800; // enough for long Arabic/English titles
-  const baseGenerationSpacing = 450;
+  const baseGenerationSpacing = options.dyslexicMode ? 450 : 150;
   const minContentWidth = 1280;
   
   options.c ||= 16;
