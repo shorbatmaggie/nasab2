@@ -204,7 +204,8 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
   return (
     (data, options = {}) => {
       options.color ||= (d, i) => color(i);
-      const tangleLayout = constructTangleLayout(_.cloneDeep(data), options);
+      const isDyslexic = document.body.classList.contains('dyslexic-mode');
+      const tangleLayout = constructTangleLayout(_.cloneDeep(data), { ...options, dyslexicMode: isDyslexic });
 
       const svgWidth = tangleLayout.layout.width;
       const svgHeight = tangleLayout.layout.height;
@@ -226,8 +227,9 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
   <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
     <style>
       text {
-        font-family: sans-serif;
+        font-family: 'Noto Sans', sans-serif;
         font-size: 16px;
+        fill: #588B8B;
       }
       .node { stroke-linecap: round; }
       .link { fill: none; }
