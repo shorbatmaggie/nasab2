@@ -449,7 +449,8 @@
     "id": "Iʿānat al-Nabīh limā Zāda ʿan al-Minhāj min al-Ḥāwī wa-l-Bahja wa-l-Tanbīh",
     "label": "Iʿānat al-Nabīh limā Zāda ʿan al-Minhāj min al-Ḥāwī wa-l-Bahja wa-l-Tanbīh",
     "parents": [
-      "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+      "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn",
+      "al-Tanbīh"
     ],
     "death": 9999,
     "author": "Unknown B"
@@ -617,7 +618,9 @@
   {
     "id": "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya",
     "label": "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya",
-    "parents": [],
+    "parents": [
+      "al-Bahja al-Wardiyya "
+    ],
     "death": 926,
     "author": "al-Anṣārī"
   },
@@ -1015,6 +1018,13 @@
     ],
     "death": 855,
     "author": "Burhān al-Dīn al-Nawawī"
+  },
+  {
+    "id": "al-Bahja al-Wardiyya ",
+    "label": "al-Bahja al-Wardiyya ",
+    "parents": [],
+    "death": 749,
+    "author": "Ibn al-Wardī"
   },
   {
     "id": "Aqsā al-Rawāj li-Tuḥfat al-Muḥtāj",
@@ -1733,8 +1743,8 @@
     "author": "Muṣṭafā al-Dhahabī"
   },
   {
-    "id": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ʿalā al-Minhāj",
-    "label": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ʿalā al-Minhāj",
+    "id": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ",
+    "label": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ",
     "parents": [
       "Kanz al-Rāghibīn fī Sharḥ Minhāj al-Ṭālibīn [li-l-Maḥallī]"
     ],

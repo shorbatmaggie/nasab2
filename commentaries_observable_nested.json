@@ -29,13 +29,6 @@
       "author": "Abū Shujāʿ "
     },
     {
-      "id": "al-Muḥarrar li-l-Rafi'i ",
-      "label": "al-Muḥarrar li-l-Rafi'i ",
-      "parents": [],
-      "death": 623,
-      "author": "al-Rāfiʿī"
-    },
-    {
       "id": "Sharḥ al-Wajīz li-l-Rāfiʿī",
       "label": "Sharḥ al-Wajīz li-l-Rāfiʿī",
       "parents": [],
@@ -43,11 +36,18 @@
       "author": "al-Rāfiʿī"
     },
     {
-      "id": "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya",
-      "label": "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya",
+      "id": "al-Muḥarrar li-l-Rafi'i ",
+      "label": "al-Muḥarrar li-l-Rafi'i ",
       "parents": [],
-      "death": 926,
-      "author": "al-Anṣārī"
+      "death": 623,
+      "author": "al-Rāfiʿī"
+    },
+    {
+      "id": "al-Bahja al-Wardiyya ",
+      "label": "al-Bahja al-Wardiyya ",
+      "parents": [],
+      "death": 749,
+      "author": "Ibn al-Wardī"
     },
     {
       "id": "Qurrat al-ʿAyn bi-Muhimmāt al-Dīn",
@@ -158,13 +158,13 @@
       "author": "Ibn Qāsim "
     },
     {
-      "id": "Ḥāshiyat al-Shirbīnī ʿalā al-Ghurar al-Bahiyya ",
-      "label": "Ḥāshiyat al-Shirbīnī ʿalā al-Ghurar al-Bahiyya ",
+      "id": "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya",
+      "label": "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya",
       "parents": [
-        "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya"
+        "al-Bahja al-Wardiyya "
       ],
-      "death": 977,
-      "author": "al-Khaṭīb al-Shirbīnī"
+      "death": 926,
+      "author": "al-Anṣārī"
     },
     {
       "id": "al-Iqnāʿ fī Ḥall Alfāẓ Abī Shujāʿ",
@@ -183,15 +183,6 @@
       ],
       "death": 987,
       "author": "al-Maʿbarī"
-    },
-    {
-      "id": "Ḥāshiyat al-ʿAbbādī ʿalā al-Ghurar al-Bahiyya ",
-      "label": "Ḥāshiyat al-ʿAbbādī ʿalā al-Ghurar al-Bahiyya ",
-      "parents": [
-        "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya"
-      ],
-      "death": 992,
-      "author": "Ibn Qāsim al-ʿAbbādī"
     },
     {
       "id": "Takmilat Sharḥ al-Majmūʿ",
@@ -223,15 +214,6 @@
       "author": "al-Nawawī"
     },
     {
-      "id": "Bayān Gharaḍ al-Muḥtāj ilā Kitāb al-Minhāj",
-      "label": "Bayān Gharaḍ al-Muḥtāj ilā Kitāb al-Minhāj",
-      "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
-      ],
-      "death": 729,
-      "author": "Ibn al-Firkāḥ "
-    },
-    {
       "id": "al-Ibtihāj Mukhtaṣar al-Minhāj",
       "label": "al-Ibtihāj Mukhtaṣar al-Minhāj",
       "parents": [
@@ -239,6 +221,15 @@
       ],
       "death": 729,
       "author": " al-Qūnawī "
+    },
+    {
+      "id": "Bayān Gharaḍ al-Muḥtāj ilā Kitāb al-Minhāj",
+      "label": "Bayān Gharaḍ al-Muḥtāj ilā Kitāb al-Minhāj",
+      "parents": [
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+      ],
+      "death": 729,
+      "author": "Ibn al-Firkāḥ "
     },
     {
       "id": "al-Sirāj al-Wahhāj Sharḥ Minhāj al-Ṭālibīn",
@@ -304,6 +295,15 @@
       "author": "al-Isnawī"
     },
     {
+      "id": "al-Hidāya ilā Awhām al-Kifāya",
+      "label": "al-Hidāya ilā Awhām al-Kifāya",
+      "parents": [
+        "Kifāyat al-Nabīh bi-Sharḥ al-Tanbīh"
+      ],
+      "death": 772,
+      "author": "al-Isnawī"
+    },
+    {
       "id": "al-Muhimmāt ʿalā al-Rawḍa",
       "label": "al-Muhimmāt ʿalā al-Rawḍa",
       "parents": [
@@ -313,13 +313,13 @@
       "author": "al-Isnawī"
     },
     {
-      "id": "al-Hidāya ilā Awhām al-Kifāya",
-      "label": "al-Hidāya ilā Awhām al-Kifāya",
+      "id": "Ghunyat al-Muḥtāj fī Sharḥ al-Minhāj ",
+      "label": "Ghunyat al-Muḥtāj fī Sharḥ al-Minhāj ",
       "parents": [
-        "Kifāyat al-Nabīh bi-Sharḥ al-Tanbīh"
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
-      "death": 772,
-      "author": "al-Isnawī"
+      "death": 783,
+      "author": "al-Adhraʿī"
     },
     {
       "id": "Qūt al-Muḥtāj fī Sharḥ al-Minhāj",
@@ -335,15 +335,6 @@
       "label": "al-Tawassuṭ wa-l-Fatḥ bayna al-Rawḍa wa-l-Sharḥ",
       "parents": [
         "Rawḍat al-Ṭālibīn"
-      ],
-      "death": 783,
-      "author": "al-Adhraʿī"
-    },
-    {
-      "id": "Ghunyat al-Muḥtāj fī Sharḥ al-Minhāj ",
-      "label": "Ghunyat al-Muḥtāj fī Sharḥ al-Minhāj ",
-      "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
       "death": 783,
       "author": "al-Adhraʿī"
@@ -367,15 +358,6 @@
       "author": "al-Dhamārī"
     },
     {
-      "id": "al-Dībāj bi-Tawḍīḥ al-Minhāj",
-      "label": "al-Dībāj bi-Tawḍīḥ al-Minhāj",
-      "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
-      ],
-      "death": 794,
-      "author": "al-Zarkashī"
-    },
-    {
       "id": "Takmilat Sharḥ al-Minhāj li-l-Isnawī",
       "label": "Takmilat Sharḥ al-Minhāj li-l-Isnawī",
       "parents": [
@@ -394,6 +376,15 @@
       "author": "al-Zarkashī"
     },
     {
+      "id": "al-Dībāj bi-Tawḍīḥ al-Minhāj",
+      "label": "al-Dībāj bi-Tawḍīḥ al-Minhāj",
+      "parents": [
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+      ],
+      "death": 794,
+      "author": "al-Zarkashī"
+    },
+    {
       "id": "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]",
       "label": "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]",
       "parents": [
@@ -403,8 +394,8 @@
       "author": "Sharaf al-Dīn al-Ghazzī "
     },
     {
-      "id": "ʿUmdat al-Muḥtāj ilā Sharḥ al-Minhāj",
-      "label": "ʿUmdat al-Muḥtāj ilā Sharḥ al-Minhāj",
+      "id": "al-Ishārāt ilā Mā Waqaʿa fī al-Minhāj ",
+      "label": "al-Ishārāt ilā Mā Waqaʿa fī al-Minhāj ",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
@@ -439,22 +430,13 @@
       "author": "Ibn al-Mulaqqin"
     },
     {
-      "id": "al-Ishārāt ilā Mā Waqaʿa fī al-Minhāj ",
-      "label": "al-Ishārāt ilā Mā Waqaʿa fī al-Minhāj ",
+      "id": "ʿUmdat al-Muḥtāj ilā Sharḥ al-Minhāj",
+      "label": "ʿUmdat al-Muḥtāj ilā Sharḥ al-Minhāj",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
       "death": 804,
       "author": "Ibn al-Mulaqqin"
-    },
-    {
-      "id": "Ḥawāsh ʿalā al-Rawḍa",
-      "label": "Ḥawāsh ʿalā al-Rawḍa",
-      "parents": [
-        "Rawḍat al-Ṭālibīn"
-      ],
-      "death": 805,
-      "author": "Sirāj al-Dīn al-Bulqīnī "
     },
     {
       "id": "Taṣḥīḥ al-Minhāj",
@@ -466,13 +448,13 @@
       "author": "Sirāj al-Dīn al-Bulqīnī "
     },
     {
-      "id": "Silāḥ al-Iḥtijāj fī al-Dhabb ʿan al-Minhāj",
-      "label": "Silāḥ al-Iḥtijāj fī al-Dhabb ʿan al-Minhāj",
+      "id": "Ḥawāsh ʿalā al-Rawḍa",
+      "label": "Ḥawāsh ʿalā al-Rawḍa",
       "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+        "Rawḍat al-Ṭālibīn"
       ],
-      "death": 808,
-      "author": "al-ʿIyzarī"
+      "death": 805,
+      "author": "Sirāj al-Dīn al-Bulqīnī "
     },
     {
       "id": "al-Najm al-Wahhāj bi-Sharḥ al-Minhāj",
@@ -491,6 +473,15 @@
       ],
       "death": 808,
       "author": "Ibn ʿImād "
+    },
+    {
+      "id": "Silāḥ al-Iḥtijāj fī al-Dhabb ʿan al-Minhāj",
+      "label": "Silāḥ al-Iḥtijāj fī al-Dhabb ʿan al-Minhāj",
+      "parents": [
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+      ],
+      "death": 808,
+      "author": "al-ʿIyzarī"
     },
     {
       "id": "Ḥawāʾish ʿalā al-Rawḍa",
@@ -656,8 +647,8 @@
       "author": " al-Mārdīnī "
     },
     {
-      "id": "Bidāyat al-Muḥtāj fī Sharḥ al-Minhāj",
-      "label": "Bidāyat al-Muḥtāj fī Sharḥ al-Minhāj",
+      "id": "Irshād al-Muḥtāj fī Sharḥ al-Minhāj",
+      "label": "Irshād al-Muḥtāj fī Sharḥ al-Minhāj",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
@@ -665,8 +656,8 @@
       "author": "Ibn Qāḍī Shuhba"
     },
     {
-      "id": "Irshād al-Muḥtāj fī Sharḥ al-Minhāj",
-      "label": "Irshād al-Muḥtāj fī Sharḥ al-Minhāj",
+      "id": "Bidāyat al-Muḥtāj fī Sharḥ al-Minhāj",
+      "label": "Bidāyat al-Muḥtāj fī Sharḥ al-Minhāj",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
@@ -692,6 +683,17 @@
       "author": "al-Ḥusaynī"
     },
     {
+      "id": "Iʿlām al-Nabīh mimmā Zāda ʿalā al-Minhāj min al-Ḥāwī wa-l-Tanbīh",
+      "label": "Iʿlām al-Nabīh mimmā Zāda ʿalā al-Minhāj min al-Ḥāwī wa-l-Tanbīh",
+      "parents": [
+        "al-Tanbīh",
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn",
+        "al-Ḥāwī al-Kabīr"
+      ],
+      "death": 876,
+      "author": "(Ibn) Qāḍī ʿAjlūn"
+    },
+    {
       "id": "al-Tāj fī Zawāʾid al-Rawḍa ʿalā al-Minhāj",
       "label": "al-Tāj fī Zawāʾid al-Rawḍa ʿalā al-Minhāj",
       "parents": [
@@ -706,17 +708,6 @@
       "label": "Mughnī al-Rāghibīn bi-Taṣḥīḥ Minhāj al-Ṭālibīn",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
-      ],
-      "death": 876,
-      "author": "(Ibn) Qāḍī ʿAjlūn"
-    },
-    {
-      "id": "Iʿlām al-Nabīh mimmā Zāda ʿalā al-Minhāj min al-Ḥāwī wa-l-Tanbīh",
-      "label": "Iʿlām al-Nabīh mimmā Zāda ʿalā al-Minhāj min al-Ḥāwī wa-l-Tanbīh",
-      "parents": [
-        "al-Tanbīh",
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn",
-        "al-Ḥāwī al-Kabīr"
       ],
       "death": 876,
       "author": "(Ibn) Qāḍī ʿAjlūn"
@@ -740,19 +731,19 @@
       "author": "al-Jalāl al-Bakrī"
     },
     {
-      "id": "Nahajat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
-      "label": "Nahajat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
+      "id": "Sharḥ al-Minhāj [li-l-Jalāl al-Bakrī]",
+      "label": "Sharḥ al-Minhāj [li-l-Jalāl al-Bakrī]",
       "parents": [
-        "Rawḍat al-Ṭālibīn"
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
       "death": 891,
       "author": "al-Jalāl al-Bakrī"
     },
     {
-      "id": "Sharḥ al-Minhāj [li-l-Jalāl al-Bakrī]",
-      "label": "Sharḥ al-Minhāj [li-l-Jalāl al-Bakrī]",
+      "id": "Nahajat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
+      "label": "Nahajat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
       "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+        "Rawḍat al-Ṭālibīn"
       ],
       "death": 891,
       "author": "al-Jalāl al-Bakrī"
@@ -776,15 +767,6 @@
       "author": "Ibn Abī Sharīf"
     },
     {
-      "id": "Durrat al-Tāj fī Iʿrāb Mushkil al-Minhāj",
-      "label": "Durrat al-Tāj fī Iʿrāb Mushkil al-Minhāj",
-      "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
-      ],
-      "death": 911,
-      "author": "al-Suyūṭī"
-    },
-    {
       "id": "al-Yunūʿ fīmā ʿalā al-Rawḍa min al-Furūʿ",
       "label": "al-Yunūʿ fīmā ʿalā al-Rawḍa min al-Furūʿ",
       "parents": [
@@ -803,6 +785,15 @@
       "author": "al-Suyūṭī"
     },
     {
+      "id": "Durrat al-Tāj fī Iʿrāb Mushkil al-Minhāj",
+      "label": "Durrat al-Tāj fī Iʿrāb Mushkil al-Minhāj",
+      "parents": [
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+      ],
+      "death": 911,
+      "author": "al-Suyūṭī"
+    },
+    {
       "id": "al-Qawl al-Mustajād fī Sharḥ Kitāb Ummahāt al-Awlād",
       "label": "al-Qawl al-Mustajād fī Sharḥ Kitāb Ummahāt al-Awlād",
       "parents": [
@@ -812,19 +803,19 @@
       "author": "al-Samhūdī"
     },
     {
-      "id": "Bahjat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
-      "label": "Bahjat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
+      "id": "al-Ibtihāj bi-Sharḥ al-Minhāj",
+      "label": "al-Ibtihāj bi-Sharḥ al-Minhāj",
       "parents": [
-        "Rawḍat al-Ṭālibīn"
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
       "death": 916,
       "author": "al-Naṣībī"
     },
     {
-      "id": "al-Ibtihāj bi-Sharḥ al-Minhāj",
-      "label": "al-Ibtihāj bi-Sharḥ al-Minhāj",
+      "id": "Bahjat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
+      "label": "Bahjat al-Rāghibīn bi-Ḥawāshī Rawdat al-Ṭālibīn",
       "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
+        "Rawḍat al-Ṭālibīn"
       ],
       "death": 916,
       "author": "al-Naṣībī"
@@ -839,8 +830,8 @@
       "author": "al-Dīrūṭī "
     },
     {
-      "id": "Sharḥ al-Minhāj (Sharḥ Farāʾiḍ al-Minhāj)",
-      "label": "Sharḥ al-Minhāj (Sharḥ Farāʾiḍ al-Minhāj)",
+      "id": "Manhaj al-Ṭullāb",
+      "label": "Manhaj al-Ṭullāb",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
@@ -848,8 +839,8 @@
       "author": "al-Anṣārī"
     },
     {
-      "id": "Manhaj al-Ṭullāb",
-      "label": "Manhaj al-Ṭullāb",
+      "id": "Sharḥ al-Minhāj (Sharḥ Farāʾiḍ al-Minhāj)",
+      "label": "Sharḥ al-Minhāj (Sharḥ Farāʾiḍ al-Minhāj)",
       "parents": [
         "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
       ],
@@ -902,6 +893,15 @@
       "author": "Ibn Ḥajar al-Haytamī"
     },
     {
+      "id": "Ḥāshiyat al-Shirbīnī ʿalā al-Ghurar al-Bahiyya ",
+      "label": "Ḥāshiyat al-Shirbīnī ʿalā al-Ghurar al-Bahiyya ",
+      "parents": [
+        "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya"
+      ],
+      "death": 977,
+      "author": "al-Khaṭīb al-Shirbīnī"
+    },
+    {
       "id": "Mughnī al-Muḥtāj ilā Maʿrifat Maʿānī Alfāẓ al-Minhāj",
       "label": "Mughnī al-Muḥtāj ilā Maʿrifat Maʿānī Alfāẓ al-Minhāj",
       "parents": [
@@ -927,6 +927,15 @@
       ],
       "death": 984,
       "author": "Abū al-Barakāt al-Ghazzī"
+    },
+    {
+      "id": "Ḥāshiyat al-ʿAbbādī ʿalā al-Ghurar al-Bahiyya ",
+      "label": "Ḥāshiyat al-ʿAbbādī ʿalā al-Ghurar al-Bahiyya ",
+      "parents": [
+        "al-Ghurar al-Bahiyya fī Sharḥ al-Bahja al-Wardiyya"
+      ],
+      "death": 992,
+      "author": "Ibn Qāsim al-ʿAbbādī"
     },
     {
       "id": "Nihāyat (Ghāyat) al-Muḥtāj bi-Sharḥ al-Minhāj",
@@ -1082,15 +1091,6 @@
       "author": "al-Ḥalabī "
     },
     {
-      "id": "Mukhtaṣar al-Majmūʿ",
-      "label": "Mukhtaṣar al-Majmūʿ",
-      "parents": [
-        "al-Majmūʿ Sharḥ al-Muhadhdhab"
-      ],
-      "death": 1370,
-      "author": "Sālim al-Rāfiʿī"
-    },
-    {
       "id": "Taqrīr al-Marṣafī ʿalā al-Minhāj",
       "label": "Taqrīr al-Marṣafī ʿalā al-Minhāj",
       "parents": [
@@ -1100,6 +1100,15 @@
       "author": "al-Marṣafī"
     },
     {
+      "id": "Mukhtaṣar al-Majmūʿ",
+      "label": "Mukhtaṣar al-Majmūʿ",
+      "parents": [
+        "al-Majmūʿ Sharḥ al-Muhadhdhab"
+      ],
+      "death": 1370,
+      "author": "Sālim al-Rāfiʿī"
+    },
+    {
       "id": "Sullam al-Mutaʿallim al-Muḥtāj bi-Rumūz al-Minhāj",
       "label": "Sullam al-Mutaʿallim al-Muḥtāj bi-Rumūz al-Minhāj",
       "parents": [
@@ -1107,6 +1116,16 @@
       ],
       "death": 1390,
       "author": "Shamīla al-Ahdal"
+    },
+    {
+      "id": "Iʿānat al-Nabīh limā Zāda ʿan al-Minhāj min al-Ḥāwī wa-l-Bahja wa-l-Tanbīh",
+      "label": "Iʿānat al-Nabīh limā Zāda ʿan al-Minhāj min al-Ḥāwī wa-l-Bahja wa-l-Tanbīh",
+      "parents": [
+        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn",
+        "al-Tanbīh"
+      ],
+      "death": 9999,
+      "author": "Unknown B"
     },
     {
       "id": "al-Muḥtāj ilā Ḥall Alfāẓ al-Minhāj",
@@ -1134,15 +1153,6 @@
       ],
       "death": 9999,
       "author": "Unknown A"
-    },
-    {
-      "id": "Iʿānat al-Nabīh limā Zāda ʿan al-Minhāj min al-Ḥāwī wa-l-Bahja wa-l-Tanbīh",
-      "label": "Iʿānat al-Nabīh limā Zāda ʿan al-Minhāj min al-Ḥāwī wa-l-Bahja wa-l-Tanbīh",
-      "parents": [
-        "Minhāj al-Ṭālibīn wa-ʿUmdat al-Muftīn"
-      ],
-      "death": 9999,
-      "author": "Unknown B"
     },
     {
       "id": "Miṣbāḥ al-Muḥtāj ilā Mā fī al-Minhāj",
@@ -1228,15 +1238,6 @@
       "author": " al-Miṣrī"
     },
     {
-      "id": "Ḥusn al-Ibtihāj Sharḥ al-Minhāj",
-      "label": "Ḥusn al-Ibtihāj Sharḥ al-Minhāj",
-      "parents": [
-        "al-Ibtihāj Sharḥ al-Minhāj"
-      ],
-      "death": 864,
-      "author": "al-Maḥallī"
-    },
-    {
       "id": "ʿAyyināt al-Muʿallimāt bi-l-Iʿrāḍāt ʿalā al-Muhimmāt",
       "label": "ʿAyyināt al-Muʿallimāt bi-l-Iʿrāḍāt ʿalā al-Muhimmāt",
       "parents": [
@@ -1244,6 +1245,15 @@
       ],
       "death": 864,
       "author": "al-Ṭarābulsī"
+    },
+    {
+      "id": "Ḥusn al-Ibtihāj Sharḥ al-Minhāj",
+      "label": "Ḥusn al-Ibtihāj Sharḥ al-Minhāj",
+      "parents": [
+        "al-Ibtihāj Sharḥ al-Minhāj"
+      ],
+      "death": 864,
+      "author": "al-Maḥallī"
     },
     {
       "id": "al-Masāʾil al-Muʿallimāt bi-l-Iʿrāḍāt ʿalā al-Muhimmāt",
@@ -1309,6 +1319,15 @@
       "author": "Abū al-Ḥasan al-Bakrī"
     },
     {
+      "id": "Ḥāshiya ʿalā Tuḥfat al-Muḥtāj [li-ʿAmīra]",
+      "label": "Ḥāshiya ʿalā Tuḥfat al-Muḥtāj [li-ʿAmīra]",
+      "parents": [
+        "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]"
+      ],
+      "death": 957,
+      "author": " ʿAmīra "
+    },
+    {
       "id": "Ḥāshiyat al-Ramlī ʿalā Asnā al-Maṭālib",
       "label": "Ḥāshiyat al-Ramlī ʿalā Asnā al-Maṭālib",
       "parents": [
@@ -1322,15 +1341,6 @@
       "label": "Ḥāshiya ʿalā Kanz al-Rāghibīn Sharḥ Minhāj al-Ṭālibīn",
       "parents": [
         "Kanz al-Rāghibīn fī Sharḥ Minhāj al-Ṭālibīn [li-l-Maḥallī]"
-      ],
-      "death": 957,
-      "author": " ʿAmīra "
-    },
-    {
-      "id": "Ḥāshiya ʿalā Tuḥfat al-Muḥtāj [li-ʿAmīra]",
-      "label": "Ḥāshiya ʿalā Tuḥfat al-Muḥtāj [li-ʿAmīra]",
-      "parents": [
-        "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]"
       ],
       "death": 957,
       "author": " ʿAmīra "
@@ -1480,8 +1490,8 @@
       "author": "Ibn Muṭayr ʿAlī"
     },
     {
-      "id": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ʿalā al-Minhāj",
-      "label": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ʿalā al-Minhāj",
+      "id": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ",
+      "label": "Ḥāshiyat al-Qalyūbī ʿalā Sharḥ al-Jalāl al-Maḥallī ",
       "parents": [
         "Kanz al-Rāghibīn fī Sharḥ Minhāj al-Ṭālibīn [li-l-Maḥallī]"
       ],
@@ -1552,15 +1562,6 @@
       "author": "al-Malwī"
     },
     {
-      "id": "Sharḥ al-Sirāj al-Wahhāj (Mukhtaṣar Nihāyat al-Muḥtāj)",
-      "label": "Sharḥ al-Sirāj al-Wahhāj (Mukhtaṣar Nihāyat al-Muḥtāj)",
-      "parents": [
-        "Nihāyat (Ghāyat) al-Muḥtāj bi-Sharḥ al-Minhāj"
-      ],
-      "death": 1189,
-      "author": "al-Khalīlī"
-    },
-    {
       "id": "Mukhtaṣar al-Manhaj",
       "label": "Mukhtaṣar al-Manhaj",
       "parents": [
@@ -1577,6 +1578,15 @@
       ],
       "death": 1189,
       "author": "al-Shibīnī"
+    },
+    {
+      "id": "Sharḥ al-Sirāj al-Wahhāj (Mukhtaṣar Nihāyat al-Muḥtāj)",
+      "label": "Sharḥ al-Sirāj al-Wahhāj (Mukhtaṣar Nihāyat al-Muḥtāj)",
+      "parents": [
+        "Nihāyat (Ghāyat) al-Muḥtāj bi-Sharḥ al-Minhāj"
+      ],
+      "death": 1189,
+      "author": "al-Khalīlī"
     },
     {
       "id": "ʿUqūd al-Durr fī Bayān Muṣṭalaḥāt Tuḥfat Ibn Ḥajar",
@@ -1714,13 +1724,13 @@
       "author": "Ibn Sumīṭ"
     },
     {
-      "id": "Ḥāshiya ʿalā Sharḥ al-Minhāj [li-l-Minūfī]",
-      "label": "Ḥāshiya ʿalā Sharḥ al-Minhāj [li-l-Minūfī]",
+      "id": "Mukhtaṣar Tuḥfat al-Muḥtāj",
+      "label": "Mukhtaṣar Tuḥfat al-Muḥtāj",
       "parents": [
-        "Kanz al-Rāghibīn fī Sharḥ Minhāj al-Ṭālibīn [li-l-Maḥallī]"
+        "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]"
       ],
       "death": 9999,
-      "author": "al-Minūfī "
+      "author": "al-Sanandajī"
     },
     {
       "id": "Manhaj al-Rāghib Sharḥ Manhaj al-Ṭullāb",
@@ -1732,13 +1742,13 @@
       "author": "al-Maqdisī"
     },
     {
-      "id": "Mukhtaṣar Tuḥfat al-Muḥtāj",
-      "label": "Mukhtaṣar Tuḥfat al-Muḥtāj",
+      "id": "Ḥāshiya ʿalā Sharḥ al-Minhāj [li-l-Minūfī]",
+      "label": "Ḥāshiya ʿalā Sharḥ al-Minhāj [li-l-Minūfī]",
       "parents": [
-        "Tuḥfat al-Muḥtāj Sharḥ al-Minhāj [li-Sharaf al-Dīn al-Ghazzī]"
+        "Kanz al-Rāghibīn fī Sharḥ Minhāj al-Ṭālibīn [li-l-Maḥallī]"
       ],
       "death": 9999,
-      "author": "al-Sanandajī"
+      "author": "al-Minūfī "
     },
     {
       "id": "Ḥāshiya ʿalā Dībājat Tuḥfat al-Muḥtāj",
@@ -1833,19 +1843,19 @@
       "author": "Nūr al-Dīn al-Ḥalabī"
     },
     {
-      "id": "Ḥawāshī al-Rawḍ Jarradaha min Ḥawāshī al-Ramlī ",
-      "label": "Ḥawāshī al-Rawḍ Jarradaha min Ḥawāshī al-Ramlī ",
+      "id": "Ḥāshiya ʿalā Sharḥ al-Manhaj [li-l-Khaṭīb al-Shūbarī]",
+      "label": "Ḥāshiya ʿalā Sharḥ al-Manhaj [li-l-Khaṭīb al-Shūbarī]",
       "parents": [
-        "Ḥāshiyat al-Ramlī ʿalā Asnā al-Maṭālib"
+        "Fatḥ al-Wahhāb bi-Sharḥ Manhaj al-Ṭullāb"
       ],
       "death": 1069,
       "author": "al-Khaṭīb al-Shūbarī"
     },
     {
-      "id": "Ḥāshiya ʿalā Sharḥ al-Manhaj [li-l-Khaṭīb al-Shūbarī]",
-      "label": "Ḥāshiya ʿalā Sharḥ al-Manhaj [li-l-Khaṭīb al-Shūbarī]",
+      "id": "Ḥawāshī al-Rawḍ Jarradaha min Ḥawāshī al-Ramlī ",
+      "label": "Ḥawāshī al-Rawḍ Jarradaha min Ḥawāshī al-Ramlī ",
       "parents": [
-        "Fatḥ al-Wahhāb bi-Sharḥ Manhaj al-Ṭullāb"
+        "Ḥāshiyat al-Ramlī ʿalā Asnā al-Maṭālib"
       ],
       "death": 1069,
       "author": "al-Khaṭīb al-Shūbarī"
@@ -1968,15 +1978,6 @@
       "author": "al-Bujayramī"
     },
     {
-      "id": "Mukhtaṣar al-Muhimmāt [li-l-Rawānī]",
-      "label": "Mukhtaṣar al-Muhimmāt [li-l-Rawānī]",
-      "parents": [
-        "Muhimmāt al-Muhimmāt"
-      ],
-      "death": 9999,
-      "author": "al-Rawānī"
-    },
-    {
       "id": "Ḥāshiya al-Iṭfīḥī ʿalā Sharḥ Manhaj al-Ṭullāb",
       "label": "Ḥāshiya al-Iṭfīḥī ʿalā Sharḥ Manhaj al-Ṭullāb",
       "parents": [
@@ -1984,6 +1985,15 @@
       ],
       "death": 9999,
       "author": "al-Iṭfīḥī"
+    },
+    {
+      "id": "Mukhtaṣar al-Muhimmāt [li-l-Rawānī]",
+      "label": "Mukhtaṣar al-Muhimmāt [li-l-Rawānī]",
+      "parents": [
+        "Muhimmāt al-Muhimmāt"
+      ],
+      "death": 9999,
+      "author": "al-Rawānī"
     }
   ],
   [
