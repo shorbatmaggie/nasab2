@@ -64,41 +64,33 @@
   <header class="p-6 rounded shadow">
     <div class="max-w-7xl mx-auto">
       <h1 class="text-4xl font-bold tracking-wide">Nasab</h1>
-      <p class="mt-1 text-lg not-italic">A Genealogy Visualization Tool for Shāfiʿī Commentaries</p>
+      <p class="mt-1 text-lg not-italic">A Genealogy Visualization Tool for Shāfiʿī Commentaries
+      </p>
     </div>
   </header>
 
   <!-- Navigation -->
   <nav class="max-w-7xl mx-auto mt-4 mb-8 flex gap-4 text-lg font-semibold">
     <a href="../kan-zaman/index.html" class="underline">Kan Zaman</a>
-    <a href="explore.html" class="underline">Explore a Text</a>
-    <a href="compare.html" class="underline">Compare Multiple Texts</a>
+    <a href="nasab2.html" class="underline">Full Tree</a>
+    <a href="lineage-layers.html" class="underline">Lineage Layers</a>
     <label>
       <input type="checkbox" id="dyslexia-toggle" />
       Dyslexia-Friendly Font
     </label>
   </nav>
 
-  <!-- Welcome + Links -->
-  <section class="max-w-3xl mx-auto p-8 mb-8 bg-white rounded-xl shadow text-[#588B8B] text-center">
-    <h2 class="text-2xl font-bold mb-2">Welcome to Nasab</h2>
-    <p class="mb-4">
-      Visualize and compare the textual genealogy of medieval Shāfiʿī commentaries.<br>
-      Choose an option below to get started:
-    </p>
-    <div class="flex justify-center gap-8">
-      <a href="explore.html" class="text-lg underline font-semibold">Explore a Text</a>
-      <a href="compare.html" class="text-lg underline font-semibold">Compare Multiple Texts</a>
-    </div>
-  </section>
 
-  <!-- Full Tree Visualization -->
-  <main id="chart-area" class="max-w-7xl mx-auto"></main>
+  <!-- Main Chart Area -->
+ <main id="chart-area" class="max-w-7xl mx-auto"></main>
+
+
 
   <!-- Observable Runtime -->
   <script type="module">
     import define from "./index.js";
     import { Runtime, Inspector } from "./runtime.js";
+
     const runtime = new Runtime();
     const main = runtime.module(define, name => {
       if (name === undefined) return new Inspector(document.querySelector("#chart-area"));
@@ -109,6 +101,7 @@
       document.body.classList.toggle("dyslexic-mode", this.checked);
     });
   </script>
+
 </body>
 
 </html>
