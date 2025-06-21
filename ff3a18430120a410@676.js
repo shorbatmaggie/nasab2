@@ -506,9 +506,9 @@ function _constructTangleLayout(d3){return(
   const metro_d = 4;
   const min_family_height = 22;
   const generationSpacing = 250;
-  const bundleClearance = 300;
-  const labelPadding = 500; // enough for long Arabic/English titles
-  const baseGenerationSpacing = 150;
+  const bundleClearance = 485;
+  const labelPadding = 800; // enough for long regular/dyslexic titles
+  const baseGenerationSpacing = 425;
   const minContentWidth = 1280;
   
   
