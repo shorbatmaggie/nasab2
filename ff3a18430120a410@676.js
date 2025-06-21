@@ -644,7 +644,6 @@ export default function define(runtime, observer) {
   const main = runtime.module();
 
   main.variable(observer("title")).define(["md"], _1);
-  // main.variable(observer()).define(["renderChart", "data"], _2);
   main.variable(observer("codeHeader")).define(["md"], _3);
   main.variable(observer("renderChart")).define("renderChart", ["color", "constructTangleLayout", "_", "svg", "background_color", "d3"], _renderChart);
   main.value("renderChart").then(fn => window.renderChart = fn);
