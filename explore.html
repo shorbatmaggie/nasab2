@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Nasab</title>
+  <title>Explore a Text | Nasab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Fonts -->
@@ -71,9 +71,10 @@
 
   <!-- Navigation -->
   <nav class="max-w-7xl mx-auto mt-4 mb-8 flex gap-4 text-lg font-semibold">
-    <a href="../kan-zaman/index.html" class="underline">Kan Zaman</a>
-    <a href="nasab2.html" class="underline">Full Tree</a>
-    <a href="lineage-layers.html" class="underline">Lineage Layers</a>
+    <a href="index.html" class="underline">Home</a>
+    <a href="compare.html" class="underline">Compare Multiple Texts</a>
+    <a href="about.html" class="underline">About</a>
+    <a href="../kan-zaman/index.html" class="underline">More Tools</a>
     <label>
       <input type="checkbox" id="dyslexia-toggle" />
       Dyslexia-Friendly Font
@@ -84,11 +85,9 @@
   <!-- Main Chart Area -->
  <main id="chart-area" class="max-w-7xl mx-auto"></main>
 
-
-
   <!-- Observable Runtime -->
   <script type="module">
-    import define from "./index.js";
+    import define from "./explore_index.js";
     import { Runtime, Inspector } from "./runtime.js";
 
     const runtime = new Runtime();
