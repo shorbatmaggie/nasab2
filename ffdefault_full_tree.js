@@ -319,9 +319,9 @@ function _constructTangleLayout(d3){return(
   const metro_d = 4;
   const min_family_height = 22;
   const generationSpacing = 250;
-  const bundleClearance = 470;
+  const bundleClearance = 480;
   const labelPadding = 800; // enough for long Arabic/English titles
-  const baseGenerationSpacing = 390;
+  const baseGenerationSpacing = 400;
   const minContentWidth = 1280;
   
   options.c ||= 16;
