@@ -121,14 +121,7 @@
 
           );
         });
-        // === Now force a redraw with the current dyslexia mode spacing ===
-      if (window.renderChart && window.fullDataForChart) {
-        document.querySelector("#chart-area").innerHTML = "";
-        document.querySelector("#chart-area").appendChild(
-          window.renderChart(window.fullDataForChart)
-      );
-    }
-  });
+    });
 
   </script>
 </body>

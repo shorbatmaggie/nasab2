@@ -156,7 +156,7 @@ function _dropdown(fullData) {
 
   const title = document.createElement("h2");
   title.className = "text-xl font-bold mb-2";
-  title.textContent = "Explore a Genealogy";
+  title.textContent = "Explore a Text";
 
   const [ancestryLabel, ancestrySelect] = createDropdown("View Ancestry:", extractAncestry, "ancestry-select");
   const [descendantLabel, descendantSelect] = createDropdown("View Descendants:", extractDescendants, "descendant-select");
