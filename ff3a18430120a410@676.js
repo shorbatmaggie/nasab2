@@ -209,9 +209,6 @@ function _dropdown(fullData) {
   const chartContainer = document.querySelector("#chart-area");
   chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
-  // PATCH: return nothing to avoid Observable artifact node
-  return undefined;
-
 }
 
 function _3(md) { return (md`## Code`) } 
@@ -654,7 +651,8 @@ export default function define(runtime, observer) {
   main.variable(observer("constructTangleLayout")).define("constructTangleLayout", ["d3"], _constructTangleLayout);
   main.variable(observer("color")).define("color", ["d3"], _color);
   main.variable(observer("background_color")).define("background_color", _background_color);
-  main.variable(observer()).define(["fullData"], _dropdown);
+  main.value("fullData").then(_dropdown);
+
   main.variable(observer("depsHeader")).define(["md"], _9);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("_")).define("_", ["require"], __);
