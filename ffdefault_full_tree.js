@@ -36,7 +36,7 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
   <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
     <style>
       text {
-        font-family: sans-serif;
+        font-family: 'Noto Sans', sans-serif;
         font-size: 16px;
       }
       .node { stroke-linecap: round; }
