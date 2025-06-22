@@ -117,7 +117,7 @@ function _dropdown(fullData, defaultLayers) {
   // Add blank option
   const blank = document.createElement("option");
   blank.value = "";
-  blank.textContent = " Select a Text";
+  blank.textContent = " ";
   select.appendChild(blank);
 
   // Add options
@@ -192,11 +192,14 @@ function _dropdown(fullData, defaultLayers) {
     select.value = "";
     layersList = [];
     addedIds = new Set();
-    window.setFilteredData(window.defaultLayersCache);
+    // Hide the vis
+    const chartArea = document.getElementById("chart-area");
+    if (chartArea) chartArea.innerHTML = "";
     renderAddedLineages();
   };
+  
 
-  // Initial render
+  // No Initial render
   renderAddedLineages();
 
   section.append(title, label, select, addBtn, resetBtn, addedDiv);
@@ -208,7 +211,6 @@ function _dropdown(fullData, defaultLayers) {
   const chartContainer = document.querySelector("#chart-area");
   chartContainer?.parentNode?.insertBefore(outer, chartContainer);
 
-  return outer;
 }
 
 
@@ -663,8 +665,11 @@ export default function define(runtime, observer) {
   main.variable(observer("fullData")).define("fullData", _fullData);
   main.variable(observer("defaultLayers")).define("defaultLayers", _defaultLayers);
 
-  // Only one dropdown registration, with both datasets!
-  main.variable(observer()).define(["fullData", "defaultLayers"], _dropdown);
+  Promise.all([main.value("fullData"), main.value("defaultLayers")]).then(([fullData, defaultLayers]) => {
+    _dropdown(fullData, defaultLayers);
+  });
+  
+ 
 
   main.variable(observer("constructTangleLayout")).define("constructTangleLayout", ["d3"], _constructTangleLayout);
   main.variable(observer("color")).define("color", ["d3"], _color);
@@ -673,16 +678,16 @@ export default function define(runtime, observer) {
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("_")).define("_", ["require"], __);
 
- // Wait for both renderChart and defaultLayers to be ready before rendering default vis
-Promise.all([
-  main.value("defaultLayers"),
-  main.value("renderChart")
-]).then(([layers, renderChart]) => {
-  window.defaultLayersCache = layers;
-  window.renderChart = renderChart;
-  window.setFilteredData(layers);
-  window.currentVis = "default";
-});
+ 
+  Promise.all([
+    main.value("defaultLayers"),
+    main.value("renderChart")
+  ]).then(([layers, renderChart]) => {
+    window.defaultLayersCache = layers;
+    window.renderChart = renderChart;
+    window.currentVis = "default";
+  });
+
 
 
   return main;
