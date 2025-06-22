@@ -102,7 +102,7 @@ function _dropdown(fullData, defaultLayers) {
 
   const title = document.createElement("h2");
   title.className = "text-xl font-bold mb-2";
-  title.textContent = "Build a Multi-Lineage Visualization";
+  title.textContent = "Compare Texts";
 
   // Dropdown
   const label = document.createElement("label");
