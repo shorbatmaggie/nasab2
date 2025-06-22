@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Compare a Text | Nasab</title>
+    <title>More Tools | Nasab </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Fonts -->
@@ -72,9 +72,9 @@
     <!-- Navigation -->
     <nav class="max-w-7xl mx-auto mt-4 mb-8 flex gap-4 text-lg font-semibold">
         <a href="index.html" class="underline">Home</a>
-        <a href="explore.html" class="underline"></a>>Explore a Text</a>
+        <a href="explore.html">Explore a Text</a>
+        <a href="compare.html" class="underline">Compare Multiple Texts</a>
         <a href="about.html" class="underline">About</a>
-        <a href="../kan-zaman/index.html" class="underline">More Tools</a>
         
 
 
@@ -85,20 +85,7 @@
     </nav>
 
 
-    <!-- Main Chart Area -->
-    <main id="chart-area" class="max-w-7xl mx-auto"></main>
 
-
-
-    <!-- Observable Runtime -->
-    <script type="module">
-        import define from "./ffcompare.js";        ;
-        import { Runtime, Inspector } from "./runtime.js";
-
-        const runtime = new Runtime();
-        const main = runtime.module(define, name => {
-            if (name === undefined) return new Inspector(document.querySelector("#chart-area"));
-        });
 
         // Dyslexia font toggle
         document.getElementById("dyslexia-toggle").addEventListener("change", function () {
