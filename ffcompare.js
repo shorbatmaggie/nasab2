@@ -102,13 +102,13 @@ function _dropdown(fullData, defaultLayers) {
 
   const title = document.createElement("h2");
   title.className = "text-xl font-bold mb-2";
-  title.textContent = "Compare Texts";
+  title.textContent = "Compare Multiple Texts";
 
   // Dropdown
   const label = document.createElement("label");
   label.setAttribute("for", "lineage-select");
   label.className = "block font-semibold mb-1";
-  label.textContent = "Select Text:";
+  label.textContent = "Select a Lineage:";
 
   const select = document.createElement("select");
   select.id = "lineage-select";
@@ -248,8 +248,9 @@ function _renderChart(color, constructTangleLayout, _, svg, background_color, d3
   <svg width="${svgWidth}" height="${svgHeight}" style="background-color: ${background_color}">
     <style>
       text {
-        font-family: sans-serif;
+        font-family: 'Noto Sans', sans-serif;
         font-size: 16px;
+        fill: #588B8B;
       }
       .node { stroke-linecap: round; }
       .link { fill: none; }
